@@ -12,4 +12,5 @@ const AllJobs = () => {
     </section>
   );
 };
+
 export default AllJobs;

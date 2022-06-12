@@ -1,5 +1,3 @@
-import Wrapper from '../assets/wrappers/StatItem';
-
 const StatItem = ({ count, title, icon, color, bcg, fas, colorStatus }) => {
   return (
     <div className='col-lg-4'>

@@ -9,13 +9,13 @@ const Alert = () => {
       role='alert'
     >
       {alertText}
-      <button
+      {/* <button
         type='button'
         className='btn-close'
         data-bs-dismiss='alert'
         aria-hidden='true'
         aria-label='Close'
-      />
+      /> */}
     </div>
   );
 };

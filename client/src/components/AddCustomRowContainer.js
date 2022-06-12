@@ -1,6 +1,5 @@
 import { useAppContext } from '../context/appContext';
-import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { FormRow, FormRowSelect, Alert } from '../components';
+import { FormRow2, Alert } from '../components';
 
 const AddCustomRowContainer = () => {
   const {
@@ -36,46 +35,57 @@ const AddCustomRowContainer = () => {
   };
 
   return (
-    <Wrapper>
-      <form className='form'>
-        <h3>{isCustomRowEditing ? 'edit custom row' : 'add new custom row'}</h3>
-        {showAlert && <Alert />}
-        <div className='form-center'>
-          <FormRow
-            type='text'
-            labelText='Custom Row Title'
-            name='customRowTitle'
-            value={customRowTitle}
-            handleChange={handleCustomRowFormInput}
-          />
-          {/* <FormRow
-            type='text'
-            labelText='Description'
-            name='customRowTitle'
-            value={customRowTitle}
-            handleChange={handleCustomRowFormInput}
-          /> */}
-          <div className='btn-container'>
-            <button
-              className='btn btn-block submit-btn'
-              onClick={handleSubmit}
-              disabled={isLoading}
-            >
-              create
-            </button>
-            <button
-              className='btn btn-block clear-btn'
-              onClick={(e) => {
-                e.preventDefault();
-                clearValues_Add_CustomRows();
-              }}
-            >
-              clear
-            </button>
-          </div>
-        </div>
-      </form>
-    </Wrapper>
+    <div className='row'>
+      <div className='col-lg-12'>
+        <section className='card'>
+          <header className='card-header'>
+            <h2 className='card-title'>
+              {isCustomRowEditing ? 'Edit Custom Row' : 'Add New Custom Row'}
+            </h2>
+            {/* <p className='card-subtitle'>
+                This is an example of form with multiple block columns.
+              </p> */}
+          </header>
+          <form onSubmit={handleSubmit}>
+            <div className='card-body'>
+              {showAlert && <Alert />}
+              <div className='row form-group pb-3'>
+                <div className='col-lg-6'>
+                  <FormRow2
+                    type='text'
+                    labelText='Custom Row Title'
+                    name='customRowTitle'
+                    value={customRowTitle}
+                    handleChange={handleCustomRowFormInput}
+                  />
+                </div>
+              </div>
+            </div>
+            <footer className='card-footer text-end'>
+              <button
+                type='submit'
+                onClick={handleSubmit}
+                disabled={isLoading}
+                className='btn btn-primary'
+                style={{ marginRight: '5px' }}
+              >
+                Create
+              </button>
+              <button
+                type='reset'
+                className='btn btn-default'
+                onClick={(e) => {
+                  e.preventDefault();
+                  clearValues_Add_CustomRows();
+                }}
+              >
+                Clear
+              </button>
+            </footer>
+          </form>
+        </section>
+      </div>
+    </div>
   );
 };
 export default AddCustomRowContainer;

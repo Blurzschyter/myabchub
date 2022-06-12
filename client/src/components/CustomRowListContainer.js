@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
-import Wrapper from '../assets/wrappers/JobsContainer';
-import Loading from './Loading';
 import CustomRowItem from '../components/CustomRowItem.js';
+import LoadingNew from './LoadingNew';
 
 const CustomRowListContainer = () => {
   const { isLoading, customRows, totalCustomRows, getCustomRows } =
@@ -10,31 +9,35 @@ const CustomRowListContainer = () => {
 
   useEffect(() => {
     getCustomRows();
+    // eslint-disable-next-line
   }, []);
 
   if (isLoading) {
-    return <Loading center />;
+    return <LoadingNew style={{ margin: '0 auto' }} />;
   }
 
   if (customRows.length === 0) {
     return (
-      <Wrapper>
-        <h2>No custom rows to display...</h2>
-      </Wrapper>
+      <div>
+        <h4 className='mt-0 mb-0 font-weight-bold text-dark'>
+          No custom rows to display
+        </h4>
+        {/* <p>Block Widgets are perfect to show some statistics.</p> */}
+      </div>
     );
   }
 
   return (
-    <Wrapper>
-      <h5>
+    <div>
+      <h4 className='mt-0 mb-10 font-weight-bold text-dark'>
         {totalCustomRows} custom row{customRows.length > 1 && 's'} found
-      </h5>
-      <div className='jobs'>
+      </h4>
+      <div className='row'>
         {customRows.map((item) => {
           return <CustomRowItem key={item._id} {...item} />;
         })}
       </div>
-    </Wrapper>
+    </div>
   );
 };
 
