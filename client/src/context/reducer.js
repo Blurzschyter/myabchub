@@ -28,6 +28,12 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_SEARCH_FILTERS,
   CHANGE_PAGE,
+  GET_CUSTOMROWS_BEGIN,
+  GET_CUSTOMROWS_SUCCESS,
+  CLEAR_VALUES_ADD_CUSTOMROWS,
+  CREATE_CUSTOMROW_BEGIN,
+  CREATE_CUSTOMROW_SUCCESS,
+  CREATE_CUSTOMROW_ERROR,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -312,6 +318,61 @@ const reducer = (state, action) => {
     return {
       ...state,
       page: action.payload.page,
+    };
+  }
+
+  if (action.type === GET_CUSTOMROWS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === GET_CUSTOMROWS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      customRows: action.payload.customRows,
+      totalCustomRows: action.payload.totalCustomRows,
+    };
+  }
+
+  if (action.type === CLEAR_VALUES_ADD_CUSTOMROWS) {
+    const resetState = {
+      customRowTitle: '',
+    };
+
+    return {
+      ...state,
+      ...resetState,
+    };
+  }
+
+  if (action.type === CREATE_CUSTOMROW_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === CREATE_CUSTOMROW_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Custom Row Created!',
+    };
+  }
+
+  if (action.type === CREATE_CUSTOMROW_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     };
   }
 

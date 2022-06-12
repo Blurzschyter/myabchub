@@ -1,26 +1,27 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 import links from '../utils/links';
 
 const NavLinks = ({ toggleSidebar }) => {
+  const location = useLocation();
+  // console.log(`current location : ${location.pathname}`);
   return (
-    <div className='nav-links'>
+    <>
       {links.map((link) => {
-        const { text, path, id, icon } = link;
+        const { text, path, id, boxicon } = link;
+        // console.log(`current mapping path: ${path}`);
         return (
-          <NavLink
+          <li
             key={id}
-            to={path}
-            onClick={toggleSidebar}
-            className={({ isActive }) =>
-              isActive ? 'nav-link active' : 'nav-link'
-            }
+            className={location.pathname === path ? 'nav-active' : null}
           >
-            <span className='icon'>{icon}</span>
-            {text}
-          </NavLink>
+            <Link to={path} className='nav-link' href='#'>
+              <i className={boxicon} aria-hidden='true' />
+              <span>{text}</span>
+            </Link>
+          </li>
         );
       })}
-    </div>
+    </>
   );
 };
 export default NavLinks;

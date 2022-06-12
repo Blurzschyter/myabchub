@@ -1,4 +1,4 @@
-import { FormRow, Alert, FormRowSelect } from '../../components';
+import { FormRow2, Alert, FormRowSelect2 } from '../../components';
 import { useAppContext } from '../../context/appContext';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 
@@ -43,64 +43,100 @@ const AddJob = () => {
   };
 
   return (
-    <Wrapper>
-      <form className='form'>
-        <h3>{isEditing ? 'edit job' : 'add job'}</h3>
-        {showAlert && <Alert />}
-        <div className='form-center'>
-          <FormRow
-            type='text'
-            name='position'
-            value={position}
-            handleChange={handleJobInput}
-          />
-          <FormRow
-            type='text'
-            name='company'
-            value={company}
-            handleChange={handleJobInput}
-          />
-          <FormRow
-            type='text'
-            labelText='job location'
-            name='jobLocation'
-            value={jobLocation}
-            handleChange={handleJobInput}
-          />
-          <FormRowSelect
-            name='status'
-            value={status}
-            handleChange={handleJobInput}
-            list={statusOptions}
-          />
-          <FormRowSelect
-            name='jobType'
-            value={jobType}
-            handleChange={handleJobInput}
-            list={jobTypeOptions}
-            labelText='Job Type'
-          />
-          <div className='btn-container'>
-            <button
-              className='btn btn-block submit-btn'
-              onClick={handleSubmit}
-              disabled={isLoading}
-            >
-              submit
-            </button>
-            <button
-              className='btn btn-block clear-btn'
-              onClick={(e) => {
-                e.preventDefault();
-                clearValues();
-              }}
-            >
-              clear
-            </button>
-          </div>
+    <section role='main' className='content-body'>
+      <header className='page-header'>
+        <h2>Add Job</h2>
+      </header>
+      <div className='row'>
+        <div className='col-lg-12'>
+          <section className='card'>
+            <header className='card-header'>
+              <h2 className='card-title'>
+                {isEditing ? 'Edit Job' : 'Add Job'}
+              </h2>
+              {/* <p className='card-subtitle'>
+                This is an example of form with multiple block columns.
+              </p> */}
+            </header>
+            <form onSubmit={handleSubmit}>
+              <div className='card-body'>
+                {showAlert && <Alert />}
+                <div className='row form-group pb-3'>
+                  <div className='col-lg-4'>
+                    <FormRow2
+                      type='text'
+                      labelText='Position'
+                      name='position'
+                      value={position}
+                      handleChange={handleJobInput}
+                    />
+                  </div>
+                  <div className='col-lg-4'>
+                    <FormRow2
+                      type='text'
+                      labelText='Company'
+                      name='company'
+                      value={company}
+                      handleChange={handleJobInput}
+                    />
+                  </div>
+                  <div className='col-lg-4'>
+                    <FormRow2
+                      type='text'
+                      labelText='Job Location'
+                      name='jobLocation'
+                      value={jobLocation}
+                      handleChange={handleJobInput}
+                    />
+                  </div>
+                </div>
+                <div className='row form-group pb-3'>
+                  <div className='col-lg-4'>
+                    <FormRowSelect2
+                      labelText='Status'
+                      name='status'
+                      value={status}
+                      handleChange={handleJobInput}
+                      list={statusOptions}
+                    />
+                  </div>
+                  <div className='col-lg-4'>
+                    <FormRowSelect2
+                      labelText='Job Type'
+                      name='jobType'
+                      value={jobType}
+                      handleChange={handleJobInput}
+                      list={jobTypeOptions}
+                    />
+                  </div>
+                </div>
+              </div>
+              <footer className='card-footer text-end'>
+                <button
+                  type='submit'
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                  className='btn btn-primary'
+                  style={{ marginRight: '5px' }}
+                >
+                  Submit{' '}
+                </button>
+                <button
+                  type='reset'
+                  className='btn btn-default'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    clearValues();
+                  }}
+                >
+                  Clear
+                </button>
+              </footer>
+            </form>
+          </section>
         </div>
-      </form>
-    </Wrapper>
+      </div>
+    </section>
   );
 };
 

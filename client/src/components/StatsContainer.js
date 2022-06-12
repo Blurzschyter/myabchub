@@ -12,6 +12,8 @@ const StatsContainer = () => {
       icon: <FaSuitcaseRolling />,
       color: '#e9b949',
       bcg: '#fcefc7',
+      fas: 'fa-suitcase-rolling',
+      colorStatus: 'pending',
     },
     {
       title: 'interviews scheduled',
@@ -19,6 +21,8 @@ const StatsContainer = () => {
       icon: <FaCalendarCheck />,
       color: '#647acb',
       bcg: '#e0e8f9',
+      fas: 'fa-calendar-check',
+      colorStatus: 'declined',
     },
     {
       title: 'jobs declined',
@@ -26,15 +30,17 @@ const StatsContainer = () => {
       icon: <FaBug />,
       color: '#d66a6a',
       bcg: '#ffeeee',
+      fas: 'fa-bug',
+      colorStatus: 'interview',
     },
   ];
 
   return (
-    <Wrapper>
+    <div className='row'>
       {defaultStats.map((item, index) => {
         return <StatItem key={index} {...item} />;
       })}
-    </Wrapper>
+    </div>
   );
 };
 export default StatsContainer;

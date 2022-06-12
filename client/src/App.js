@@ -6,6 +6,7 @@ import {
   Profile,
   SharedLayout,
   Stats,
+  CustomRow,
 } from './pages/dashboard';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path='all-jobs' element={<AllJobs />} />
           <Route path='add-job' element={<AddJob />} />
           <Route path='profile' element={<Profile />} />
+          <Route path='customrow' element={<CustomRow />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />

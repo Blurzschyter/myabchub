@@ -23,6 +23,7 @@ import connectDB from './db/connect.js'; //above middleware
 //routers
 import authRouter from './routes/authRoutes.js';
 import jobsRouter from './routes/jobsRoutes.js';
+import customRowRouter from './routes/customRowRoutes.js';
 
 //middleware
 import notFoundMiddleware from './middleware/not-found.js';
@@ -53,6 +54,7 @@ app.use(mongoSanitize());
 //real route
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', authenticateUser, jobsRouter);
+app.use('/api/v1/customPlayTVHomeRow', authenticateUser, customRowRouter);
 
 //redirect to client index.html from the build file. then run node server.js to test (server only)
 app.get('*', (req, res) => {

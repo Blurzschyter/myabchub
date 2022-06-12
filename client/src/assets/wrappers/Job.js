@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.article`
   background: var(--white);
@@ -53,6 +53,14 @@ const Wrapper = styled.article`
     color: #d66a6a;
     background: #ffeeee;
   }
+  .hideDisplay-false {
+    color: #0f5132;
+    background: #d1e7dd;
+  }
+  .hideDisplay-true {
+    color: #d66a6a;
+    background: #ffeeee;
+  }
   .content {
     padding: 1rem 1.5rem;
   }
@@ -93,6 +101,13 @@ const Wrapper = styled.article`
     background: var(--green-light);
     margin-right: 0.5rem;
   }
+  .configure-btn {
+    /* color: var(--blue-dark);
+    background: var(--blue-light); */
+    background: #e0e8f9;
+    color: #647acb;
+    margin-right: 0.5rem;
+  }
   .delete-btn {
     color: var(--red-dark);
     background: var(--red-light);
@@ -100,6 +115,6 @@ const Wrapper = styled.article`
   &:hover .actions {
     visibility: visible;
   }
-`
+`;
 
-export default Wrapper
+export default Wrapper;

@@ -31,6 +31,12 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_SEARCH_FILTERS,
   CHANGE_PAGE,
+  GET_CUSTOMROWS_BEGIN,
+  GET_CUSTOMROWS_SUCCESS,
+  CLEAR_VALUES_ADD_CUSTOMROWS,
+  CREATE_CUSTOMROW_BEGIN,
+  CREATE_CUSTOMROW_SUCCESS,
+  CREATE_CUSTOMROW_ERROR,
 } from './actions';
 import reducer from './reducer';
 
@@ -67,6 +73,10 @@ const initialState = {
   searchType: 'all',
   sort: 'latest',
   sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
+  customRows: [],
+  totalCustomRows: 0,
+  isCustomRowEditing: false,
+  customRowTitle: '',
 };
 
 const AppContext = React.createContext();
@@ -367,6 +377,53 @@ const AppProvider = ({ children }) => {
     console.log(`change page : ${page}`);
   };
 
+  //get jobs
+  const getCustomRows = async () => {
+    let url = `/customPlayTVHomeRow`;
+
+    dispatch({ type: GET_CUSTOMROWS_BEGIN });
+    try {
+      const { data } = await authFetch(url);
+      const { customRows, totalCustomRows } = data;
+      dispatch({
+        type: GET_CUSTOMROWS_SUCCESS,
+        payload: {
+          customRows,
+          totalCustomRows,
+        },
+      });
+    } catch (error) {
+      // console.log(error.response);
+      logoutUser();
+    }
+    clearAlert();
+  };
+
+  const clearValues_Add_CustomRows = () => {
+    dispatch({ type: CLEAR_VALUES_ADD_CUSTOMROWS });
+  };
+
+  const createCustomRow = async () => {
+    dispatch({ type: CREATE_CUSTOMROW_BEGIN });
+    try {
+      const { customRowTitle } = state;
+      await authFetch.post('/customPlayTVHomeRow', {
+        rowTitle: customRowTitle,
+        channelList: [],
+      });
+      dispatch({ type: CREATE_CUSTOMROW_SUCCESS });
+      dispatch({ type: CLEAR_VALUES_ADD_CUSTOMROWS });
+      getCustomRows();
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_CUSTOMROW_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -387,6 +444,9 @@ const AppProvider = ({ children }) => {
         showStats,
         clearSearchFilter,
         changePage,
+        getCustomRows,
+        clearValues_Add_CustomRows,
+        createCustomRow,
       }}
     >
       {children}

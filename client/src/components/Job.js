@@ -19,42 +19,67 @@ const Job = ({
   let date = moment(createdAt);
   date = date.format('MMM Do, YYYY');
 
+  const title = `  ${position} | ${company}`;
+
   return (
-    <Wrapper>
-      <header>
-        <div className='main-icon'>{company.charAt(0)}</div>
-        <div className='info'>
-          <h5>{position}</h5>
-          <p>{company}</p>
+    <div className='col-6'>
+      <section className='card mb-3'>
+        <header className='card-header'>
+          <h2 className='card-title'>
+            <span className='badge badge-primary font-weight-bold va-middle p-2 me-e'>
+              {position.charAt(0).toUpperCase()}
+            </span>
+            <span className='va-middle'>{title}</span>
+          </h2>
+        </header>
+        <div className='card-body'>
+          <div className='content row'>
+            {/* letak content sni */}
+            <div className='col-6'>
+              <p className='mb-2'>
+                <i className='bx bxs-navigation me-1 text-7 top-6 position-relative' />
+                {jobLocation}
+              </p>
+              <p className='mb-2'>
+                <i className='bx bxs-briefcase me-1 text-7 top-7 position-relative' />
+                {jobType}
+              </p>
+            </div>
+            <div className='col-6'>
+              <p className='mb-2'>
+                <i className='bx bxs-calendar me-1 text-7 top-6 position-relative' />
+                {date}
+              </p>
+              <p className='mb-2'>
+                <i className='bx bxs-label me-1 text-7 top-7 position-relative' />
+                {status}
+              </p>
+            </div>
+          </div>
         </div>
-      </header>
-      <div className='content'>
-        <div className='content-center'>
-          <JobInfo icon={<FaLocationArrow />} text={jobLocation} />
-          <JobInfo icon={<FaCalendarAlt />} text={date} />
-          <JobInfo icon={<FaBriefcase />} text={jobType} />
-          <div className={`status ${status}`}>{status}</div>
-        </div>
-        <footer>
-          <div className='actions'>
-            <Link
-              to='/add-job'
-              className='btn edit-btn'
-              onClick={() => setEditJob(_id)}
-            >
-              Edit
+        <div className='card-footer'>
+          {/* letak button kat sni */}
+          <p className='m-0'>
+            <Link to='/add-job'>
+              <button
+                onClick={() => setEditJob(_id)}
+                type='button'
+                className='mb-1 mt-1 me-1 btn btn-sm btn-primary'
+              >
+                Edit
+              </button>
             </Link>
             <button
-              type='button'
-              className='btn delete-btn'
               onClick={() => deleteJob(_id)}
+              type='button'
+              className='mb-1 mt-1 me-1 btn btn-sm btn-danger'
             >
               Delete
             </button>
-          </div>
-        </footer>
-      </div>
-    </Wrapper>
+          </p>
+        </div>
+      </section>
+    </div>
   );
 };
 export default Job;

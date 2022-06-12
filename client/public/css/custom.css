@@ -1,0 +1,24 @@
+/* Add here all your CSS customizations */
+.bg-pending {
+  background-color: #e9b949 !important;
+}
+
+.card-featured-pending {
+  border-color: #e9b949;
+}
+
+.bg-interview {
+  background-color: #647acb !important;
+}
+
+.card-featured-interview {
+  border-color: #647acb;
+}
+
+.bg-declined {
+  background-color: #d66a6a !important;
+}
+
+.card-featured-declined {
+  border-color: #d66a6a;
+}

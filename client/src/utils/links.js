@@ -6,27 +6,38 @@ import { ImProfile } from 'react-icons/im';
 const links = [
   {
     id: 1,
-    text: 'stats',
+    text: 'Stats',
     path: '/',
     icon: <IoBarChartSharp />,
+    boxicon: 'bx bx-line-chart',
   },
   {
     id: 2,
-    text: 'all jobs',
-    path: 'all-jobs',
+    text: 'All Jobs',
+    path: '/all-jobs',
     icon: <MdQueryStats />,
+    boxicon: 'bx bx-search-alt',
   },
   {
     id: 3,
-    text: 'add job',
-    path: 'add-job',
+    text: 'Add Job',
+    path: '/add-job',
     icon: <FaWpforms />,
+    boxicon: 'bx bx-list-plus',
   },
   {
     id: 4,
-    text: 'profile',
-    path: 'profile',
+    text: 'Profile',
+    path: '/profile',
     icon: <ImProfile />,
+    boxicon: 'bx bxs-user-detail',
+  },
+  {
+    id: 5,
+    text: 'Custom Row',
+    path: '/customrow',
+    icon: <ImProfile />,
+    boxicon: 'bx bx-customize',
   },
 ];
 
