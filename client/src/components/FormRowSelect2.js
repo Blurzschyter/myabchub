@@ -5,11 +5,10 @@ const FormRowSelect2 = ({ labelText, name, value, handleChange, list }) => {
         {labelText || name}
       </label>
       <select
-        class='form-control mb-3'
         name={name}
         value={value}
         onChange={handleChange}
-        className='form-select'
+        className='form-select form-control mb-3'
       >
         {list.map((itemValue, index) => {
           return (
