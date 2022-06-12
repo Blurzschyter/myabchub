@@ -1,6 +1,4 @@
 import { useAppContext } from '../context/appContext';
-import Wrapper from '../assets/wrappers/PageBtnContainer';
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 
 const PageBtnContainer = () => {
   const { numOfPages, page, changePage } = useAppContext();
@@ -45,6 +43,7 @@ const PageBtnContainer = () => {
                 onClick={prevPage}
                 style={{ cursor: 'pointer' }}
               >
+                {/* eslint-disable-next-line */}
                 <a className='page-link prev' aria-label='Previous'>
                   <span>
                     <i className='fas fa-chevron-left' aria-label='Previous' />
@@ -60,6 +59,7 @@ const PageBtnContainer = () => {
                       pageNumber === page ? 'page-item active' : 'page-item'
                     }
                   >
+                    {/* eslint-disable-next-line */}
                     <a
                       className='page-link'
                       onClick={() => changePage(pageNumber)}
@@ -74,6 +74,7 @@ const PageBtnContainer = () => {
                 onClick={nextPage}
                 style={{ cursor: 'pointer' }}
               >
+                {/* eslint-disable-next-line */}
                 <a className='page-link next' aria-label='Next'>
                   <span>
                     <i className='fas fa-chevron-right' aria-label='Next' />

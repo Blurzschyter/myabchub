@@ -1,27 +1,18 @@
 import { useEffect } from 'react';
 import { useAppContext } from '../../context/appContext';
-import { StatsContainer, Loading, ChartsContainer } from '../../components';
-import LoadingNew from '../../components/LoadingNew';
+import { StatsContainer, LoadingNew, ChartsContainer } from '../../components';
 
 const Stats = () => {
   const { showStats, isLoading, monthlyApplications } = useAppContext();
-  // console.log('stats page');
+  // console.log('stats page.');
   useEffect(() => {
     showStats();
-    // eslint-disable-next-line
     // console.log('stats page - useEffect');
-  }, []);
+  }, []); /* eslint-disable-line */
 
   if (isLoading) {
     return <LoadingNew style={{ margin: '0 auto' }} />;
   }
-
-  // return (
-  //   <>
-  //     <StatsContainer />
-  //     {monthlyApplications.length > 0 && <ChartsContainer />}
-  //   </>
-  // );
 
   return (
     <section role='main' className='content-body'>

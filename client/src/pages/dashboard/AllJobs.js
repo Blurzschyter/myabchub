@@ -2,10 +2,6 @@ import { JobsContainer, SearchContainer } from '../../components';
 
 const AllJobs = () => {
   return (
-    // <>
-    //   <SearchContainer />
-    //   <JobsContainer />
-    // </>
     <section role='main' className='content-body'>
       <header className='page-header'>
         <h2>All Jobs</h2>

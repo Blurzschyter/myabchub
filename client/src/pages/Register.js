@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; //hook
-import { Logo, FormRow, Alert } from '../components';
+import { FormRow, Alert } from '../components';
 import { useAppContext } from '../context/appContext';
 
 const initialState = {

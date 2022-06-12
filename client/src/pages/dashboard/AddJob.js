@@ -1,6 +1,5 @@
 import { FormRow2, Alert, FormRowSelect2 } from '../../components';
 import { useAppContext } from '../../context/appContext';
-import Wrapper from '../../assets/wrappers/DashboardFormPage';
 
 const AddJob = () => {
   const {

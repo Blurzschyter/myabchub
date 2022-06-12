@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { useAppContext } from '../context/appContext';
 
 const Header = () => {
-  const [showLogout, setShowLogout] = useState(false);
-  const { toggleSidebar, logoutUser, user } = useAppContext();
+  const { logoutUser, user } = useAppContext();
 
   return (
     <header className='header'>
@@ -11,7 +9,7 @@ const Header = () => {
         <a href='../4.0.0' className='logo'>
           <img src='img/logo.png' width={75} height={35} alt='Porto Admin' />
         </a>
-        {/* start: form small screen devices */}
+        {/* start: form small screen device */}
         <div
           className='d-md-none toggle-sidebar-left'
           data-toggle-class='sidebar-left-opened'
@@ -26,6 +24,7 @@ const Header = () => {
       <div className='header-right'>
         <span className='separator' />
         <div id='userbox' className='userbox'>
+          {/* eslint-disable-next-line */}
           <a href='#' data-bs-toggle='dropdown'>
             <figure className='profile-picture'>
               <img
@@ -54,6 +53,7 @@ const Header = () => {
                 </a>
               </li> */}
               <li>
+                {/* eslint-disable-next-line */}
                 <a role='menuitem' href='#' onClick={logoutUser}>
                   <i className='bx bx-power-off' /> Logout
                 </a>
@@ -66,4 +66,5 @@ const Header = () => {
     </header>
   );
 };
+
 export default Header;

@@ -1,5 +1,4 @@
 import { useAppContext } from '../context/appContext';
-import Wrapper from '../assets/wrappers/SearchContainer';
 import { FormRow2, FormRowSelect2 } from '../components';
 
 const SearchContainer = () => {

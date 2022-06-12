@@ -1,7 +1,4 @@
 import main from '../assets/images/undraw_explore_re_8l4v.svg';
-import Wrapper from '../assets/wrappers/LandingPage';
-// import Logo from '../components/Logo';
-import { Logo } from '../components';
 import { Link } from 'react-router-dom';
 
 const Landing = () => {

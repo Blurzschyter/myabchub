@@ -5,7 +5,6 @@ import FormRow from './FormRow';
 import Alert from './Alert';
 import Navbar from './Navbar';
 import SmallSidebar from './SmallSidebar';
-import BigSidebar from './BigSidebar';
 import FormRowSelect from './FormRowSelect';
 import SearchContainer from './SearchContainer';
 import JobsContainer from './JobsContainer';
@@ -20,6 +19,7 @@ import Header from './Header';
 import LeftSidebar from './LeftSidebar';
 import FormRow2 from './FormRow2';
 import FormRowSelect2 from './FormRowSelect2';
+import LoadingNew from './LoadingNew';
 
 export {
   Logo,
@@ -27,7 +27,6 @@ export {
   Alert,
   Navbar,
   SmallSidebar,
-  BigSidebar,
   FormRowSelect,
   SearchContainer,
   JobsContainer,
@@ -41,4 +40,5 @@ export {
   LeftSidebar,
   FormRow2,
   FormRowSelect2,
+  LoadingNew,
 };
