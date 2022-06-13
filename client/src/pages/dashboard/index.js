@@ -5,5 +5,14 @@ import SharedLayout from './SharedLayout.js';
 import Stats from './Stats.js';
 
 import CustomRow from './CustomRow.js';
+import EditCustomRow from './EditCustomRow.js';
 
-export { AddJob, AllJobs, Profile, SharedLayout, Stats, CustomRow };
+export {
+  AddJob,
+  AllJobs,
+  Profile,
+  SharedLayout,
+  Stats,
+  CustomRow,
+  EditCustomRow,
+};

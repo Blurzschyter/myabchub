@@ -15,6 +15,8 @@ import LeftSidebar from './LeftSidebar';
 import FormRow2 from './FormRow2';
 import FormRowSelect2 from './FormRowSelect2';
 import LoadingNew from './LoadingNew';
+import ChannelListContainer from './ChannelListContainer';
+import Channel from './Channel';
 
 export {
   FormRow,
@@ -31,4 +33,6 @@ export {
   FormRow2,
   FormRowSelect2,
   LoadingNew,
+  ChannelListContainer,
+  Channel,
 };

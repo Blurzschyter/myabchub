@@ -37,6 +37,9 @@ import {
   CREATE_CUSTOMROW_BEGIN,
   CREATE_CUSTOMROW_SUCCESS,
   CREATE_CUSTOMROW_ERROR,
+  GET_SINGLE_CUSTOMROW_BEGIN,
+  GET_SINGLE_CUSTOMROW_SUCCESS,
+  DELETE_CHANNEL_BEGIN,
 } from './actions';
 import reducer from './reducer';
 
@@ -77,6 +80,7 @@ const initialState = {
   totalCustomRows: 0,
   isCustomRowEditing: false,
   customRowTitle: '',
+  selectedCustomRowObj: {},
 };
 
 const AppContext = React.createContext();
@@ -377,7 +381,7 @@ const AppProvider = ({ children }) => {
     console.log(`change page : ${page}`);
   };
 
-  //get jobs
+  //get list of custom row
   const getCustomRows = async () => {
     let url = `/customPlayTVHomeRow`;
 
@@ -424,6 +428,43 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //get a single custom row
+  const getSingleCustomRow = async (customRowId) => {
+    let url = `/customPlayTVHomeRow/singleCustomRow/${customRowId}`;
+
+    dispatch({ type: GET_SINGLE_CUSTOMROW_BEGIN });
+    try {
+      const { data } = await authFetch(url);
+      const { customRow } = data;
+      // console.log('nizar');
+      // console.log(data);
+      dispatch({
+        type: GET_SINGLE_CUSTOMROW_SUCCESS,
+        payload: {
+          customRow,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+      // logoutUser();
+    }
+    clearAlert();
+  };
+
+  const deleteChannel = async (channelId, customRowId) => {
+    // console.log(`delete channelId : ${channelId} | customRowId: ${customRowId}`);
+    dispatch({ type: DELETE_CHANNEL_BEGIN });
+    try {
+      await authFetch.delete(
+        `/customPlayTVHomeRow/singleCustomRow/${customRowId}/channel/${channelId}`
+      );
+      getSingleCustomRow(customRowId);
+    } catch (error) {
+      console.log(error.response);
+      // logoutUser();
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -447,6 +488,8 @@ const AppProvider = ({ children }) => {
         getCustomRows,
         clearValues_Add_CustomRows,
         createCustomRow,
+        getSingleCustomRow,
+        deleteChannel,
       }}
     >
       {children}

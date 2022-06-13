@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../context/appContext';
 
 const CustomRowItem = ({
   rowTitle,
   createdAt,
   index,
+  _id,
   channelList,
   hideDisplay,
 }) => {
+  const { setEditCustomRow } = useAppContext();
+
   return (
     <div className='col-lg-6'>
       <section
@@ -37,9 +41,9 @@ const CustomRowItem = ({
               <div className='summary-footer'>
                 {/* <a className='text-muted text-uppercase'>Configure</a> */}
                 <Link
-                  to='/add-job'
+                  to={`/customrow/${_id}`}
                   className='text-muted text-uppercase'
-                  onClick={() => console.log('configure presssed')}
+                  onClick={() => setEditCustomRow(_id)}
                 >
                   Configure
                 </Link>

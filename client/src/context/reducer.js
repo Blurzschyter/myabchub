@@ -34,6 +34,9 @@ import {
   CREATE_CUSTOMROW_BEGIN,
   CREATE_CUSTOMROW_SUCCESS,
   CREATE_CUSTOMROW_ERROR,
+  GET_SINGLE_CUSTOMROW_BEGIN,
+  GET_SINGLE_CUSTOMROW_SUCCESS,
+  DELETE_CHANNEL_BEGIN,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -373,6 +376,29 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: 'danger',
       alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === GET_SINGLE_CUSTOMROW_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === GET_SINGLE_CUSTOMROW_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      selectedCustomRowObj: action.payload.customRow,
+    };
+  }
+
+  if (action.type === DELETE_CHANNEL_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
     };
   }
 

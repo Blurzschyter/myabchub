@@ -6,6 +6,7 @@ import {
   NotFoundError,
 } from '../errors/index.js';
 import checkPermissions from '../utils/checkPermissions.js';
+import mongoose from 'mongoose';
 
 const createNewCustomRow = async (req, res) => {
   // res.send('createNewCustomRow');
@@ -114,9 +115,56 @@ const addNewChannel = async (req, res) => {
   res.status(StatusCodes.OK).json({ customRow });
 };
 
+const deletePoster = async (req, res) => {
+  // res.send('delete poster');
+  const { rowId, posterId } = req.params;
+  // res.send(`rowId: ${rowId} | posterId: ${posterId}`);
+  console.log(`rowId: ${rowId} | posterId: ${posterId}`);
+  const customRow = await CustomRow.findOne({ _id: rowId });
+  if (!customRow) {
+    throw new NotFoundError(`No custom row with id : ${rowId} found`);
+  }
+
+  if (customRow.channelList.length === 0) {
+    throw new NotFoundError(`No poster found`);
+  }
+
+  const channels = customRow.channelList;
+  const channel = channels.find((item) => item._id.toString() === posterId);
+  if (!channel) {
+    throw new NotFoundError(`No poster with id : ${posterId} found`);
+  }
+  // console.log(channel);
+
+  //proceed delete single channel
+  const deleteResult = await CustomRow.findOneAndUpdate(
+    {
+      _id: mongoose.Types.ObjectId(rowId),
+    },
+    {
+      $pull: {
+        channelList: {
+          _id: posterId,
+        },
+      },
+    },
+    {
+      new: true,
+    }
+  );
+  if (!deleteResult) {
+    throw new NotFoundError(
+      `There is some issue when deleting the channel. Please try again later`
+    );
+  }
+
+  res.status(StatusCodes.OK).json({ deleteResult });
+};
+
 export {
   createNewCustomRow,
   getAllCustomRow,
   addNewChannel,
   getSingleCustomRow,
+  deletePoster,
 };
