@@ -37,6 +37,10 @@ import {
   GET_SINGLE_CUSTOMROW_BEGIN,
   GET_SINGLE_CUSTOMROW_SUCCESS,
   DELETE_CHANNEL_BEGIN,
+  DISPLAY_ALERT_TEXT,
+  CREATE_CHANNEL_BEGIN,
+  CREATE_CHANNEL_SUCCESS,
+  CREATE_CHANNEL_ERROR,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -399,6 +403,42 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: true,
+    };
+  }
+
+  if (action.type === DISPLAY_ALERT_TEXT) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.alertMsg,
+    };
+  }
+
+  if (action.type === CREATE_CHANNEL_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === CREATE_CHANNEL_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Poster Created!',
+    };
+  }
+
+  if (action.type === CREATE_CHANNEL_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     };
   }
 

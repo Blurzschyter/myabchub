@@ -40,6 +40,10 @@ import {
   GET_SINGLE_CUSTOMROW_BEGIN,
   GET_SINGLE_CUSTOMROW_SUCCESS,
   DELETE_CHANNEL_BEGIN,
+  DISPLAY_ALERT_TEXT,
+  CREATE_CHANNEL_BEGIN,
+  CREATE_CHANNEL_SUCCESS,
+  CREATE_CHANNEL_ERROR,
 } from './actions';
 import reducer from './reducer';
 
@@ -81,6 +85,20 @@ const initialState = {
   isCustomRowEditing: false,
   customRowTitle: '',
   selectedCustomRowObj: {},
+  // channelOptions: [
+  //   'unifi Sports 1',
+  //   'unifi Sports 2',
+  //   'unifi Sports 3',
+  //   'unifi Sports 4',
+  //   'unifi Sports 5',
+  // ],
+  channelsMapping: {
+    54185493: 'unifi Sports 1',
+    41210859: 'unifi Sports 2',
+    52026408: 'unifi Sports 3',
+    54199255: 'unifi Sports 4',
+    41208891: 'unifi Sports 5',
+  },
 };
 
 const AppContext = React.createContext();
@@ -465,6 +483,43 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const displayAlertText = (alertMsg) => {
+    dispatch({ type: DISPLAY_ALERT_TEXT, payload: { alertMsg } });
+    clearAlert();
+  };
+
+  const createNewPoster = async (data, customRowId) => {
+    console.log('createNewPoster');
+    // console.log(Object.fromEntries(data));
+    // console.log(`customRowId ; ${customRowId}`);
+    let url = `/customPlayTVHomeRow/singleCustomRow/${customRowId}`;
+
+    dispatch({ type: CREATE_CHANNEL_BEGIN });
+    try {
+      const responseData = await authFetch.post(url, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(responseData);
+      // const { data } = await authFetch(url);
+      // const { customRow } = data;
+      // console.log('nizar');
+      // console.log(data);
+      dispatch({
+        type: CREATE_CHANNEL_SUCCESS,
+      });
+      getSingleCustomRow(customRowId);
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_CHANNEL_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -490,6 +545,8 @@ const AppProvider = ({ children }) => {
         createCustomRow,
         getSingleCustomRow,
         deleteChannel,
+        displayAlertText,
+        createNewPoster,
       }}
     >
       {children}

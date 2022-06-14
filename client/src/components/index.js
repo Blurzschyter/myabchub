@@ -17,6 +17,7 @@ import FormRowSelect2 from './FormRowSelect2';
 import LoadingNew from './LoadingNew';
 import ChannelListContainer from './ChannelListContainer';
 import Channel from './Channel';
+import AddChannelFormContainer from './AddChannelFormContainer';
 
 export {
   FormRow,
@@ -35,4 +36,5 @@ export {
   LoadingNew,
   ChannelListContainer,
   Channel,
+  AddChannelFormContainer,
 };

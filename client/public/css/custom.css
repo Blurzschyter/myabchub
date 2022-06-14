@@ -22,3 +22,7 @@
 .card-featured-declined {
   border-color: #d66a6a;
 }
+
+.bg-img-poster {
+  background-color: #b0bec5 !important;
+}
