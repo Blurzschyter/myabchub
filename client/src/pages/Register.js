@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; //hook
 import { FormRow, Alert } from '../components';
 import { useAppContext } from '../context/appContext';
+import portoLogo from '../assets/images/logo.png';
 
 const initialState = {
   name: '',
@@ -60,7 +61,7 @@ const Register = () => {
     <section className='body-sign'>
       <div className='center-sign'>
         <a href='/' className='logo float-left'>
-          <img src='img/logo.png' height={70} alt='Porto Admin' />
+          <img src={portoLogo} height={70} alt='Porto Admin' />
         </a>
         <div className='panel card-sign'>
           <div className='card-title-sign mt-3 text-end'>

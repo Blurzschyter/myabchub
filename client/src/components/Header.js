@@ -1,4 +1,6 @@
 import { useAppContext } from '../context/appContext';
+import portoLogo from '../assets/images/logo.png';
+import myAvatar from '../assets/images/myAvatar.png';
 
 const Header = () => {
   const { logoutUser, user } = useAppContext();
@@ -7,7 +9,7 @@ const Header = () => {
     <header className='header'>
       <div className='logo-container'>
         <a href='../4.0.0' className='logo'>
-          <img src='img/logo.png' width={75} height={35} alt='Porto Admin' />
+          <img src={portoLogo} width={75} height={35} alt='Porto Admin' />
         </a>
         {/* start: form small screen device */}
         <div
@@ -28,10 +30,10 @@ const Header = () => {
           <a href='#' data-bs-toggle='dropdown'>
             <figure className='profile-picture'>
               <img
-                src='img/!logged-user.jpg'
+                src={myAvatar}
                 alt='Joseph Doe'
                 className='rounded-circle'
-                data-lock-picture='img/!logged-user.jpg'
+                data-lock-picture={myAvatar}
               />
             </figure>
             <div
