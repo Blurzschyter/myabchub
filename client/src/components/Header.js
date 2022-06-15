@@ -42,7 +42,9 @@ const Header = () => {
               data-lock-email='johndoe@okler.com'
             >
               <span className='name'>{user?.name}</span>
-              <span className='role'>Administrator</span>
+              <span className='role'>
+                {user?.role === 'user' ? 'Administrator' : 'Sp. Administrator'}
+              </span>
             </div>
             <i className='fa custom-caret' />
           </a>

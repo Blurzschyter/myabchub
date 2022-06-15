@@ -47,6 +47,7 @@ const CustomRowTable = () => {
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>apiType</th>
                   <th>Title</th>
                   <th>Total Poster</th>
                   <th>Display Status</th>
@@ -60,6 +61,7 @@ const CustomRowTable = () => {
                   return (
                     <tr>
                       <td>{item.index + 1}</td>
+                      <td>{item.apiType}</td>
                       <td>{item.rowTitle}</td>
                       <td>{item.channelList.length}</td>
                       {/* <td>{item.hideDisplay ? 'Hide' : 'Show'}</td> */}
@@ -92,7 +94,7 @@ const CustomRowTable = () => {
                           onClick={() => setEditCustomRow(item._id)}
                         >
                           {/* <a href> */}
-                          <i className='fas fa-pencil-alt' />
+                          <i className='fas fa-cog' />
                           {/* </a> */}
                         </Link>
 

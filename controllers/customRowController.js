@@ -35,8 +35,12 @@ const createNewCustomRow = async (req, res) => {
     console.log('channel list ade and tmbah data...');
   }
 
+  const docCount = await CustomRow.countDocuments({}).exec();
+  console.log(`docCount : ${docCount}`);
+
   const newCustomRow = await CustomRow.create({
     rowTitle,
+    apiType: `nm${docCount}`,
     channelList: tempChannelList,
     createdBy: req.user.userId,
   });
@@ -55,6 +59,7 @@ const getAllCustomRow = async (req, res) => {
       channelList,
       createdAt,
       updatedAt,
+      apiType,
     } = item;
     return {
       _id,
@@ -65,6 +70,7 @@ const getAllCustomRow = async (req, res) => {
       createdAt,
       updatedAt,
       index,
+      apiType,
     };
   });
 
