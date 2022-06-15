@@ -1,6 +1,7 @@
 import {
   AddCustomRowContainer,
   CustomRowListContainer,
+  CustomRowTable,
 } from '../../components';
 
 const CustomRow = () => {
@@ -11,7 +12,8 @@ const CustomRow = () => {
       </header>
       <AddCustomRowContainer />
       <hr className='solid mt-3 opacity-4' />
-      <CustomRowListContainer />
+      {/* <CustomRowListContainer /> */}
+      <CustomRowTable />
     </section>
   );
 };

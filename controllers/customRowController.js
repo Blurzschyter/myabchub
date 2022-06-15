@@ -47,8 +47,15 @@ const getAllCustomRow = async (req, res) => {
   // res.send('getAllCustomRow');
   const customRows = await CustomRow.find({}).sort('createdAt');
   const addIndexCustomRows = customRows.map((item, index) => {
-    const { _id, rowTitle, hideDisplay, createdBy, channelList, createdAt } =
-      item;
+    const {
+      _id,
+      rowTitle,
+      hideDisplay,
+      createdBy,
+      channelList,
+      createdAt,
+      updatedAt,
+    } = item;
     return {
       _id,
       rowTitle,
@@ -56,6 +63,7 @@ const getAllCustomRow = async (req, res) => {
       createdBy,
       channelList,
       createdAt,
+      updatedAt,
       index,
     };
   });
