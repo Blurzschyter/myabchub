@@ -39,6 +39,13 @@ const links = [
     icon: <ImProfile />,
     boxicon: 'bx bx-customize',
   },
+  {
+    id: 6,
+    text: 'Test',
+    path: '/playground',
+    icon: <ImProfile />,
+    boxicon: 'bx bx-test-tube',
+  },
 ];
 
 export default links;

@@ -1,6 +1,8 @@
 import { useAppContext } from '../context/appContext';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
 
 const Channel = ({
   index,
@@ -16,6 +18,7 @@ const Channel = ({
 
   const [isAtvImg, setIsAtvImg] = useState(false);
   const [mainImg, setMainImg] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setMainImg(posterURL);
@@ -36,7 +39,21 @@ const Channel = ({
     <div className='col-lg-6 col-xl-6'>
       <section className='card card-horizontal mb-4'>
         <header className='card-header bg-img-poster col-3'>
-          <img className='img-fluid' src={mainImg} alt={_id} />
+          <img
+            className='img-fluid'
+            src={mainImg}
+            alt={_id}
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          />
+          {isOpen && (
+            <Lightbox
+              mainSrc={mainImg}
+              onCloseRequest={() => setIsOpen(false)}
+              enableZoom={false}
+            />
+          )}
           <div className='btn-group d-flex top-10' role='group'>
             <button
               className={`btn btn-xs w-100 ${

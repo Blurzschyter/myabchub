@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Register, Landing, Error, ProtectedRoute } from './pages';
+import { Register, Landing, Error, ProtectedRoute, Playground } from './pages';
 import {
   AddJob,
   AllJobs,
@@ -28,6 +28,7 @@ function App() {
           <Route path='profile' element={<Profile />} />
           <Route path='customrow' element={<CustomRow />} />
           <Route path='customrow/:id' element={<EditCustomRow />} />
+          <Route path='/playground' element={<Playground />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />

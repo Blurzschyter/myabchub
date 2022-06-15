@@ -49,7 +49,7 @@ const CustomRowTable = () => {
                   <th>#</th>
                   <th>Title</th>
                   <th>Total Poster</th>
-                  <th>Status</th>
+                  <th>Display Status</th>
                   <th>Created At</th>
                   <th>Last Modified At</th>
                   <th>Actions</th>
