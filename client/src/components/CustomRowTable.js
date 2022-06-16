@@ -59,22 +59,23 @@ const CustomRowTable = () => {
               <tbody>
                 {customRows.map((item) => {
                   return (
-                    <tr>
+                    <tr key={item._id}>
                       <td>{item.index + 1}</td>
                       <td>{item.apiType}</td>
                       <td>{item.rowTitle}</td>
                       <td>{item.channelList.length}</td>
                       {/* <td>{item.hideDisplay ? 'Hide' : 'Show'}</td> */}
-                      <span
-                        className={
-                          item.hideDisplay
-                            ? `ecommerce-status failed`
-                            : `ecommerce-status completed`
-                        }
-                      >
-                        {item.hideDisplay ? 'Hide' : 'Show'}
-                      </span>
-
+                      <td>
+                        <span
+                          className={
+                            item.hideDisplay
+                              ? `ecommerce-status failed`
+                              : `ecommerce-status completed`
+                          }
+                        >
+                          {item.hideDisplay ? 'Hide' : 'Show'}
+                        </span>
+                      </td>
                       <td>
                         {moment(item.createdAt).format('D[-]MMMM[-]YYYY')}
                       </td>
