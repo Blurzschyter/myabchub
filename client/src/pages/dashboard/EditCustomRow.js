@@ -25,7 +25,7 @@ const EditCustomRow = () => {
     return (
       <section role='main' className='content-body'>
         <header className='page-header'>
-          <h2>Configure Custom Row</h2>
+          <h2>Configure Dynamic Row</h2>
         </header>
         <h2>No data to display</h2>
         <hr className='solid mt-3 opacity-4' />
@@ -37,7 +37,7 @@ const EditCustomRow = () => {
   return (
     <section role='main' className='content-body'>
       <header className='page-header'>
-        <h2>Configure Custom Row</h2>
+        <h2>Configure Dynamic Row</h2>
       </header>
       <AddChannelFormContainer customRowId={id} />
       <h2>Poster Listing</h2>

@@ -373,7 +373,7 @@ const reducer = (state, action) => {
       isLoading: false,
       showAlert: true,
       alertType: 'success',
-      alertText: 'New Custom Row Created!',
+      alertText: 'New Dynamic Row Created!',
     };
   }
 

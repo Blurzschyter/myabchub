@@ -20,7 +20,7 @@ const CustomRowListContainer = () => {
     return (
       <div>
         <h4 className='mt-0 mb-0 font-weight-bold text-dark'>
-          No custom rows to display
+          No cynamic rows to display
         </h4>
         {/* <p>Block Widgets are perfect to show some statistics.</p> */}
       </div>
@@ -30,7 +30,7 @@ const CustomRowListContainer = () => {
   return (
     <div>
       <h4 className='mt-0 mb-10 font-weight-bold text-dark'>
-        {totalCustomRows} custom row{customRows.length > 1 && 's'} found
+        {totalCustomRows} dynamic row{customRows.length > 1 && 's'} found
       </h4>
       <div className='row'>
         {customRows.map((item) => {

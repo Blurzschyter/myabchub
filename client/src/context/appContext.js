@@ -403,7 +403,7 @@ const AppProvider = ({ children }) => {
     console.log(`change page : ${page}`);
   };
 
-  //get list of custom row
+  //get list of dynamic row
   const getCustomRows = async () => {
     let url = `/customPlayTVHomeRow`;
 
@@ -450,7 +450,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  //get a single custom row
+  //get a single dynamic row
   const getSingleCustomRow = async (customRowId) => {
     let url = `/customPlayTVHomeRow/singleCustomRow/${customRowId}`;
 
