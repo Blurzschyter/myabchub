@@ -44,6 +44,7 @@ import {
   CREATE_CHANNEL_BEGIN,
   CREATE_CHANNEL_SUCCESS,
   CREATE_CHANNEL_ERROR,
+  DELETE_ROW_BEGIN,
 } from './actions';
 import reducer from './reducer';
 
@@ -463,8 +464,8 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error.response);
-      // logoutUser();
+      // console.log(error.response);
+      logoutUser();
     }
     clearAlert();
   };
@@ -478,8 +479,8 @@ const AppProvider = ({ children }) => {
       );
       getSingleCustomRow(customRowId);
     } catch (error) {
-      console.log(error.response);
-      // logoutUser();
+      // console.log(error.response);
+      logoutUser();
     }
   };
 
@@ -520,6 +521,17 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const deleteRow = async (customRowId) => {
+    dispatch({ type: DELETE_ROW_BEGIN });
+    try {
+      await authFetch.delete(`/customPlayTVHomeRow/${customRowId}`);
+      getCustomRows();
+    } catch (error) {
+      // console.log(error.response);
+      logoutUser();
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -547,6 +559,7 @@ const AppProvider = ({ children }) => {
         deleteChannel,
         displayAlertText,
         createNewPoster,
+        deleteRow,
       }}
     >
       {children}

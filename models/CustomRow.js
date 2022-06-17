@@ -20,6 +20,9 @@ const CustomRowSchema = new mongoose.Schema(
       maxlength: 50,
       trim: true,
     },
+    index: {
+      type: Number,
+    },
     hideDisplay: {
       type: Boolean,
       default: true,

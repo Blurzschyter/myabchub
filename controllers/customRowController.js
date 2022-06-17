@@ -40,6 +40,7 @@ const createNewCustomRow = async (req, res) => {
 
   const newCustomRow = await CustomRow.create({
     rowTitle,
+    index: `${docCount + 1}`,
     apiType: `nm${docCount}`,
     channelList: tempChannelList,
     createdBy: req.user.userId,
@@ -50,7 +51,7 @@ const createNewCustomRow = async (req, res) => {
 const getAllCustomRow = async (req, res) => {
   // res.send('getAllCustomRow');
   const customRows = await CustomRow.find({}).sort('createdAt');
-  const addIndexCustomRows = customRows.map((item, index) => {
+  const addIndexCustomRows = customRows.map((item) => {
     const {
       _id,
       rowTitle,
@@ -60,6 +61,7 @@ const getAllCustomRow = async (req, res) => {
       createdAt,
       updatedAt,
       apiType,
+      index,
     } = item;
     return {
       _id,
@@ -69,7 +71,7 @@ const getAllCustomRow = async (req, res) => {
       channelList,
       createdAt,
       updatedAt,
-      index,
+      index: index,
       apiType,
     };
   });
@@ -284,6 +286,35 @@ const createPoster = async (req, res) => {
   res.status(StatusCodes.OK).json({ success });
 };
 
+const deleteCustomRow = async (req, res) => {
+  const { rowId } = req.params;
+  // res.send(`deleteCustomRow: ${rowId}`);
+  const customRow = await CustomRow.findOne({ _id: rowId });
+  if (!customRow) {
+    throw new NotFoundError(`No custom row with id : ${rowId} found`);
+  }
+  const status = await customRow.remove();
+
+  const customRows = await CustomRow.find({}).sort('createdAt');
+  for (const [index, row] of customRows.entries()) {
+    // console.log(
+    //   `rowName : ${row.rowTitle} | indexDB: ${row.index} | indexLoop: ${
+    //     index + 1
+    //   }`
+    // );
+    const singleRow = await CustomRow.findOne({ _id: row._id });
+    singleRow.index = index + 1;
+    await singleRow.save();
+  }
+
+  // res.status(StatusCodes.OK).json({ customRows });
+  res.status(StatusCodes.OK).json({ msg: 'Specific row successfully deleted' });
+};
+
+const reorganizeRow = async (req, res) => {
+  res.send('reorganizeRow');
+};
+
 export {
   createNewCustomRow,
   getAllCustomRow,
@@ -291,4 +322,5 @@ export {
   getSingleCustomRow,
   deletePoster,
   createPoster,
+  deleteCustomRow,
 };

@@ -41,6 +41,7 @@ import {
   CREATE_CHANNEL_BEGIN,
   CREATE_CHANNEL_SUCCESS,
   CREATE_CHANNEL_ERROR,
+  DELETE_ROW_BEGIN,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -439,6 +440,13 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: 'danger',
       alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === DELETE_ROW_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
     };
   }
 
