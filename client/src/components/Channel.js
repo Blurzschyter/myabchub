@@ -38,7 +38,10 @@ const Channel = ({
   return (
     <div className='col-lg-6 col-xl-6'>
       <section className='card card-horizontal mb-4'>
-        <header className='card-header bg-img-poster col-3'>
+        <header
+          className='card-header bg-img-poster col-3'
+          style={{ cursor: 'pointer' }}
+        >
           <img
             className='img-fluid'
             src={mainImg}
