@@ -8,9 +8,9 @@ const Header = () => {
   return (
     <header className='header'>
       <div className='logo-container'>
-        <a href='../4.0.0' className='logo'>
+        <div className='logo'>
           <img src={portoLogo} width={75} height={35} alt='Porto Admin' />
-        </a>
+        </div>
         {/* start: form small screen device */}
         <div
           className='d-md-none toggle-sidebar-left'
