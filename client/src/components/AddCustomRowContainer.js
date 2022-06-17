@@ -40,7 +40,7 @@ const AddCustomRowContainer = () => {
         <section className='card'>
           <header className='card-header'>
             <h2 className='card-title'>
-              {isCustomRowEditing ? 'Edit Custom Row' : 'Add New Custom Row'}
+              {isCustomRowEditing ? 'Edit Dynamic Row' : 'Add New Dynamic Row'}
             </h2>
             {/* <p className='card-subtitle'>
                 This is an example of form with multiple block columns.
@@ -53,7 +53,7 @@ const AddCustomRowContainer = () => {
                 <div className='col-lg-6'>
                   <FormRow2
                     type='text'
-                    labelText='Custom Row Title'
+                    labelText='Row Title'
                     name='customRowTitle'
                     value={customRowTitle}
                     handleChange={handleCustomRowFormInput}
