@@ -45,6 +45,9 @@ import {
   CREATE_CHANNEL_SUCCESS,
   CREATE_CHANNEL_ERROR,
   DELETE_ROW_BEGIN,
+  EDIT_CUSTOMROW_BEGIN,
+  EDIT_CUSTOMROW_SUCCESS,
+  EDIT_CUSTOMROW_ERROR,
 } from './actions';
 import reducer from './reducer';
 
@@ -532,6 +535,31 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const updateRowIndex = async (latestData) => {
+    dispatch({ type: EDIT_CUSTOMROW_BEGIN });
+    try {
+      for (const [index, data] of latestData.entries()) {
+        await authFetch.patch(`/customPlayTVHomeRow/${data._id}`, {
+          indexUpdate: true,
+          newIndex: index + 1,
+        });
+        console.log(
+          `rowId: ${data._id} - newIndex: ${index} - title: ${data.rowTitle}`
+        );
+      }
+
+      dispatch({ type: EDIT_CUSTOMROW_SUCCESS });
+      // dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_CUSTOMROW_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -560,6 +588,7 @@ const AppProvider = ({ children }) => {
         displayAlertText,
         createNewPoster,
         deleteRow,
+        updateRowIndex,
       }}
     >
       {children}

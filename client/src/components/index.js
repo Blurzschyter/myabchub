@@ -19,6 +19,7 @@ import ChannelListContainer from './ChannelListContainer';
 import Channel from './Channel';
 import AddChannelFormContainer from './AddChannelFormContainer';
 import CustomRowTable from './CustomRowTable';
+import CustomRowTableItem from './CustomRowTableItem';
 
 export {
   FormRow,
@@ -39,4 +40,5 @@ export {
   Channel,
   AddChannelFormContainer,
   CustomRowTable,
+  CustomRowTableItem,
 };

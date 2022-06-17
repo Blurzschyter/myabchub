@@ -42,6 +42,9 @@ import {
   CREATE_CHANNEL_SUCCESS,
   CREATE_CHANNEL_ERROR,
   DELETE_ROW_BEGIN,
+  EDIT_CUSTOMROW_BEGIN,
+  EDIT_CUSTOMROW_SUCCESS,
+  EDIT_CUSTOMROW_ERROR,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -447,6 +450,33 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: true,
+    };
+  }
+
+  if (action.type === EDIT_CUSTOMROW_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === EDIT_CUSTOMROW_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      // showAlert: true,
+      // alertType: 'success',
+      // alertText: 'Job Updated!',
+    };
+  }
+
+  if (action.type === EDIT_CUSTOMROW_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      // showAlert: true,
+      // alertType: 'danger',
+      // alertText: action.payload.msg,
     };
   }
 
