@@ -22,11 +22,11 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Stats />} />
+          <Route path='stats' element={<Stats />} />
           <Route path='all-jobs' element={<AllJobs />} />
           <Route path='add-job' element={<AddJob />} />
           <Route path='profile' element={<Profile />} />
-          <Route path='customrow' element={<CustomRow />} />
+          <Route index element={<CustomRow />} />
           <Route path='customrow/:id' element={<EditCustomRow />} />
           <Route path='/playground' element={<Playground />} />
         </Route>
