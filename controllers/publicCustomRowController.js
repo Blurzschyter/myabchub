@@ -10,6 +10,13 @@ const getDynamicPlaytvHome = async (req, res) => {
   // res.send('getDynamicPlaytvHome');
   let result = await CustomRow.find({});
 
+  let finalUrl = '';
+  if (process.env.NODE_ENV !== 'PRODUCTION') {
+    finalUrl = 'http://localhost:5000';
+  } else {
+    finalUrl = 'https://myabchub.herokuapp.com';
+  }
+
   const addIndexCustomRows = result.map((item) => {
     const { rowTitle, hideDisplay, channelList, apiType, index } = item;
 
@@ -34,8 +41,8 @@ const getDynamicPlaytvHome = async (req, res) => {
         channelID_6002,
         channelID_6003,
         channelID_8601,
-        posterURL,
-        posterURL_ATV,
+        posterURL: `${finalUrl}${posterURL}`,
+        posterURL_ATV: `${finalUrl}${posterURL_ATV}`,
       };
     });
 
