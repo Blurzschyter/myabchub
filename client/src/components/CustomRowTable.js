@@ -62,7 +62,7 @@ const CustomRowTable = () => {
     return (
       <div>
         <h4 className='mt-0 mb-0 font-weight-bold text-dark'>
-          No custom rows list to display
+          No dynamic rows list to display
         </h4>
         {/* <p>Block Widgets are perfect to show some statistics.</p> */}
       </div>

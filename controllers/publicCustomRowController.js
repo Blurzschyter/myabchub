@@ -10,8 +10,8 @@ const getDynamicPlaytvHome = async (req, res) => {
   // res.send('getDynamicPlaytvHome');
   let result = await CustomRow.find({});
 
-  const addIndexCustomRows = result.map((item, index) => {
-    const { rowTitle, hideDisplay, channelList, apiType } = item;
+  const addIndexCustomRows = result.map((item) => {
+    const { rowTitle, hideDisplay, channelList, apiType, index } = item;
 
     const newChannelList = channelList.map((channel, index) => {
       const {
@@ -26,7 +26,7 @@ const getDynamicPlaytvHome = async (req, res) => {
         channelID_8601,
       } = channel;
       return {
-        index: index + 1,
+        index: `${index + 1}`,
         title,
         productID,
         channelID,
@@ -43,7 +43,7 @@ const getDynamicPlaytvHome = async (req, res) => {
       rowTitle,
       hideDisplay,
       channelList: newChannelList,
-      index,
+      index: index,
       apiType,
     };
   });

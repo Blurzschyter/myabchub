@@ -40,7 +40,7 @@ const createNewCustomRow = async (req, res) => {
 
   const newCustomRow = await CustomRow.create({
     rowTitle,
-    index: `${docCount + 1}`,
+    index: `${docCount}`,
     apiType: `nm${docCount}`,
     channelList: tempChannelList,
     createdBy: req.user.userId,
@@ -303,7 +303,7 @@ const deleteCustomRow = async (req, res) => {
     //   }`
     // );
     const singleRow = await CustomRow.findOne({ _id: row._id });
-    singleRow.index = index + 1;
+    singleRow.index = index;
     await singleRow.save();
   }
 

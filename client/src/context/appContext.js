@@ -541,7 +541,7 @@ const AppProvider = ({ children }) => {
       for (const [index, data] of latestData.entries()) {
         await authFetch.patch(`/customPlayTVHomeRow/${data._id}`, {
           indexUpdate: true,
-          newIndex: index + 1,
+          newIndex: index,
         });
         console.log(
           `rowId: ${data._id} - newIndex: ${index} - title: ${data.rowTitle}`
@@ -549,6 +549,7 @@ const AppProvider = ({ children }) => {
       }
 
       dispatch({ type: EDIT_CUSTOMROW_SUCCESS });
+      getCustomRows();
       // dispatch({ type: CLEAR_VALUES });
     } catch (error) {
       if (error.response.status === 401) return;

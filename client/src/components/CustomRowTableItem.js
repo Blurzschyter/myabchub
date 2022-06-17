@@ -60,7 +60,7 @@ const CustomRowTableItem = ({
       <td {...attributes} {...listeners}>
         <i className='fas fa-bars' />
       </td>
-      <td>{index}</td>
+      <td>{index + 1}</td>
       <td>{apiType}</td>
       <td>{rowTitle}</td>
       <td>{channelList.length}</td>
