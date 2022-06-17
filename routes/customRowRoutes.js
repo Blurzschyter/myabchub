@@ -8,10 +8,11 @@ import {
   deletePoster,
   createPoster,
   deleteCustomRow,
+  updateCustomRow,
 } from '../controllers/customRowController.js';
 
 router.route('/').post(createNewCustomRow).get(getAllCustomRow);
-router.route('/:rowId').delete(deleteCustomRow);
+router.route('/:rowId').delete(deleteCustomRow).patch(updateCustomRow);
 router.route('/singleCustomRow/:id').get(getSingleCustomRow);
 router.route('/addNewChannel/:id').post(addNewChannel);
 router.route('/singleCustomRow/:rowId').post(createPoster);

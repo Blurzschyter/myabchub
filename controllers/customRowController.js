@@ -50,7 +50,7 @@ const createNewCustomRow = async (req, res) => {
 
 const getAllCustomRow = async (req, res) => {
   // res.send('getAllCustomRow');
-  const customRows = await CustomRow.find({}).sort('createdAt');
+  const customRows = await CustomRow.find({}).sort('index');
   const addIndexCustomRows = customRows.map((item) => {
     const {
       _id,
@@ -311,8 +311,26 @@ const deleteCustomRow = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'Specific row successfully deleted' });
 };
 
-const reorganizeRow = async (req, res) => {
-  res.send('reorganizeRow');
+const updateCustomRow = async (req, res) => {
+  const { rowId } = req.params;
+  const { newIndex, indexUpdate } = req.body;
+
+  const customRow = await CustomRow.findOne({ _id: rowId });
+  if (!customRow) {
+    throw new NotFoundError(`No custom row with id : ${rowId} found`);
+  }
+
+  if (indexUpdate) {
+    customRow.index = newIndex;
+    const abc = await customRow.save();
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: 'New index succesffully updated', customRow: abc });
+  } else {
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: 'Please enter specific params in order to proceed' });
+  }
 };
 
 export {
@@ -323,4 +341,5 @@ export {
   deletePoster,
   createPoster,
   deleteCustomRow,
+  updateCustomRow,
 };
