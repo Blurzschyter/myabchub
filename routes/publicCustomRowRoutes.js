@@ -1,7 +1,11 @@
 import express from 'express';
 const router = express.Router();
-import { getDynamicPlaytvHome } from '../controllers/publicCustomRowController.js';
+import {
+  getDynamicPlaytvHome,
+  getDynamicPlaytvHomeMSSQL,
+} from '../controllers/publicCustomRowController.js';
 
-router.route('/').get(getDynamicPlaytvHome);
+// router.route('/').get(getDynamicPlaytvHome);
+router.route('/').get(getDynamicPlaytvHomeMSSQL);
 
 export default router;
