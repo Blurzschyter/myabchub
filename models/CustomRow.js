@@ -20,7 +20,7 @@ const CustomRowSchema = new mongoose.Schema(
       maxlength: 50,
       trim: true,
     },
-    index: {
+    indexLocation: {
       type: Number,
     },
     hideDisplay: {

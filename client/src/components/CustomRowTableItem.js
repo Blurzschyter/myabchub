@@ -6,7 +6,7 @@ import { CSS } from '@dnd-kit/utilities';
 
 const CustomRowTableItem = ({
   _id,
-  index,
+  indexLocation,
   apiType,
   rowTitle,
   hideDisplay,
@@ -60,7 +60,7 @@ const CustomRowTableItem = ({
       <td {...attributes} {...listeners}>
         <i className='fas fa-bars' />
       </td>
-      <td>{index + 1}</td>
+      <td>{indexLocation + 1}</td>
       <td>{apiType}</td>
       <td>{rowTitle}</td>
       <td>{channelList.length}</td>

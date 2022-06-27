@@ -18,7 +18,7 @@ const getDynamicPlaytvHome = async (req, res) => {
   }
 
   const addIndexCustomRows = result.map((item) => {
-    const { rowTitle, hideDisplay, channelList, apiType, index } = item;
+    const { rowTitle, hideDisplay, channelList, apiType, indexLocation } = item;
 
     const newChannelList = channelList.map((channel, index) => {
       const {
@@ -50,7 +50,7 @@ const getDynamicPlaytvHome = async (req, res) => {
       rowTitle,
       hideDisplay,
       channelList: newChannelList,
-      index: index,
+      index: indexLocation,
       apiType,
     };
   });
