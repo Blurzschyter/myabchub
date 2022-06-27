@@ -14,7 +14,7 @@ const CustomRowTableItem = ({
   createdAt,
   updatedAt,
 }) => {
-  const { setEditCustomRow, deleteRow } = useAppContext();
+  const { setEditCustomRow, deleteRow, user } = useAppContext();
 
   const {
     setNodeRef,
@@ -91,11 +91,13 @@ const CustomRowTableItem = ({
           <i className='fas fa-cog' />
           {/* </a> */}
         </Link>
-        <Link to={`/`} onClick={() => deleteRow(_id)}>
-          {/* <a href> */}
-          <i className='fas fa-trash' />
-          {/* </a> */}
-        </Link>
+        {user.role === 'admin' && (
+          <Link to={`/`} onClick={() => deleteRow(_id)}>
+            {/* <a href> */}
+            <i className='fas fa-trash' />
+            {/* </a> */}
+          </Link>
+        )}
 
         {/* <a href className='delete-row'>
                           <i className='far fa-trash-alt' />

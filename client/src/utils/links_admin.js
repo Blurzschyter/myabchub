@@ -50,11 +50,25 @@ import { ImProfile } from 'react-icons/im';
 
 const links = [
   {
+    id: 4,
+    text: 'Profile',
+    path: '/profile',
+    icon: <ImProfile />,
+    boxicon: 'bx bxs-user-detail',
+  },
+  {
     id: 5,
     text: 'Dynamic Row',
     path: '/',
     icon: <ImProfile />,
     boxicon: 'bx bx-customize',
+  },
+  {
+    id: 6,
+    text: 'Test',
+    path: '/playground',
+    icon: <ImProfile />,
+    boxicon: 'bx bx-test-tube',
   },
 ];
 
