@@ -34,24 +34,24 @@ const getDynamicPlaytvHome = async (req, res) => {
       } = channel;
       return {
         index: `${index + 1}`,
-        title,
         productID,
         channelID,
         channelID_6001,
         channelID_6002,
         channelID_6003,
         channelID_8601,
+        title,
         posterURL: `${finalUrl}${posterURL}`,
         posterURL_ATV: `${finalUrl}${posterURL_ATV}`,
       };
     });
 
     return {
+      index: indexLocation,
       rowTitle,
       hideDisplay,
-      channelList: newChannelList,
-      index: indexLocation,
       apiType,
+      channelList: newChannelList,
     };
   });
 
