@@ -20,6 +20,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 
 //db and authenticateUser
 import connectDB from './db/connect.js'; //above middleware
+import connectMssqlDB from './db/msssqlConnect.js';
 
 //routers
 import authRouter from './routes/authRoutes.js';
@@ -78,6 +79,7 @@ const port = process.env.PORT || 5000;
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
+    // await connectMssqlDB();
     app.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
     });
