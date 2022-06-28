@@ -78,7 +78,7 @@ const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
-    if (process.env.NODE_ENV !== 'MONGODB') {
+    if (process.env.DATABASE_MODE === 'MONGODB') {
       await connectDB(process.env.MONGO_URI);
     } else {
       await connectMssqlDB();
