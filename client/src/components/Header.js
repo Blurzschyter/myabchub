@@ -56,11 +56,8 @@ const Header = () => {
                   <i className='bx bx-user-circle' /> My Profile
                 </a>
               </li> */}
-              <li>
-                {/* eslint-disable-next-line */}
-                <a role='menuitem' href='#' onClick={logoutUser}>
-                  <i className='bx bx-power-off' /> Logout
-                </a>
+              <li className='customnizar' onClick={logoutUser}>
+                <i className='bx bx-power-off' /> Logout
               </li>
             </ul>
           </div>

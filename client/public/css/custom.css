@@ -26,3 +26,25 @@
 .bg-img-poster {
   background-color: #b0bec5 !important;
 }
+
+.userbox .dropdown-menu .customnizar {
+  border-radius: 2px;
+  color: #7d7d7d;
+  display: block;
+  line-height: 20.8px;
+  line-height: 1.3rem;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.userbox .dropdown-menu .customnizar i {
+  font-size: 17.6px;
+  font-size: 1.1rem;
+}
+
+.userbox .dropdown-menu .customnizar:hover {
+  background: #0088cc;
+  color: #fff;
+}
