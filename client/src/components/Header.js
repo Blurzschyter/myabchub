@@ -43,7 +43,7 @@ const Header = () => {
             >
               <span className='name'>{user?.name}</span>
               <span className='role'>
-                {user?.role === 'user' ? 'Administrator' : 'Sp. Administrator'}
+                {user?.role === 'admin' ? 'Sp. Administrator' : 'Administrator'}
               </span>
             </div>
             <i className='fa custom-caret' />
