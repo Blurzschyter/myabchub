@@ -37,9 +37,11 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
   app.use(morgan('dev'));
 }
 
-// set static page from build folder
-const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname, './client/build')));
+if (process.env.NODE_ENV === 'PRODUCTION') {
+  // set static page from build folder
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  app.use(express.static(path.resolve(__dirname, './client/build')));
+}
 
 app.use(express.static('./public')); //to make the uploaded files publically available
 // app.use(cors());
@@ -51,11 +53,15 @@ app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
 
-//dummy route
-// app.get('/', (req, res) => {
-//   // throw new Error('error');
-//   res.send('Welcome');
-// });
+if (process.env.NODE_ENV === 'DEVELOPMENT') {
+  //dummy route
+  app.get('/', (req, res) => {
+    // throw new Error('error');
+    res.status(200).json({
+      msg: 'Yahoo!.. Dummy route is trigger successfully.',
+    });
+  });
+}
 //real route
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', authenticateUser, jobsRouter);
