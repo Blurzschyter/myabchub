@@ -124,7 +124,10 @@ const AppProvider = ({ children }) => {
 
   //axios interceptor
   const authFetch = axios.create({
-    baseURL: '/api/v1',
+    baseURL:
+      process.env.REACT_APP_CURRENT_ENV === 'DEVELOPMENT'
+        ? '/api/v1'
+        : 'https://myabchub.herokuapp.com/api/v1',
   });
 
   authFetch.interceptors.request.use(
@@ -182,7 +185,14 @@ const AppProvider = ({ children }) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
       // console.log('trycatch start on registerUser()');
-      const response = await axios.post('/api/v1/auth/register', currentUser);
+      const mainUrl =
+        process.env.REACT_APP_CURRENT_ENV === 'DEVELOPMENT'
+          ? '/api/v1'
+          : 'https://myabchub.herokuapp.com/api/v1';
+      const response = await axios.post(
+        `${mainUrl}/auth/register`,
+        currentUser
+      );
       console.log(response);
       const { user, token, location } = response.data;
       dispatch({
@@ -206,7 +216,11 @@ const AppProvider = ({ children }) => {
     // console.log(currentUser);
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
-      const response = await axios.post('/api/v1/auth/login', currentUser);
+      const mainUrl =
+        process.env.REACT_APP_CURRENT_ENV === 'DEVELOPMENT'
+          ? '/api/v1'
+          : 'https://myabchub.herokuapp.com/api/v1';
+      const response = await axios.post(`${mainUrl}/auth/login`, currentUser);
       const { user, token, location } = response.data;
       dispatch({
         type: LOGIN_USER_SUCCESS,
