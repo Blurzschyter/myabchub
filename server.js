@@ -44,7 +44,9 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
 }
 
 app.use(express.static('./public')); //to make the uploaded files publically available
-// app.use(cors());
+if (process.env.NODE_ENV === 'PRODUCTION') {
+  app.use(cors());
+}
 app.use(express.json());
 app.use(fileUpload());
 
