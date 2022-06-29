@@ -57,7 +57,9 @@ const createNewCustomRow = async (req, res) => {
     }
 
     let pool = await sql.connect(config);
-    let customrows = await pool.request().query('SELECT * from customrows');
+    let customrows = await pool
+      .request()
+      .query('SELECT * from myhub_customrows');
     // console.log('total row :' + customrows.recordsets[0].length);
     const docCount = customrows.recordsets[0].length;
 
@@ -70,7 +72,7 @@ const createNewCustomRow = async (req, res) => {
       .input('input_indexLocation', sql.Int, docCount)
       .input('input_createdBy', sql.Int, req.user.userId)
       .query(
-        `INSERT INTO customrows (rowTitle, hideDisplay, apiType, indexLocation, createdBy) VALUES (@input_rowTitle, @input_hideDisplay, @input_apiType, @input_indexLocation, @input_createdBy)`
+        `INSERT INTO myhub_customrows (rowTitle, hideDisplay, apiType, indexLocation, createdBy) VALUES (@input_rowTitle, @input_hideDisplay, @input_apiType, @input_indexLocation, @input_createdBy)`
       );
 
     //get the new created custom row
@@ -79,7 +81,7 @@ const createNewCustomRow = async (req, res) => {
       .input('input_rowTitle', sql.VarChar, rowTitle)
       .input('input_createdBy', sql.Int, req.user.userId)
       .query(
-        'SELECT * from customrows where (rowTitle = @input_rowTitle and createdBy = @input_createdBy)'
+        'SELECT * from myhub_customrows where (rowTitle = @input_rowTitle and createdBy = @input_createdBy)'
       );
     console.log(createdCustomRow.recordsets[0]);
 
@@ -127,7 +129,7 @@ const getAllCustomRow = async (req, res) => {
     let customrows = await pool
       .request()
       .query(
-        'SELECT customrows.customrow_id, customrows.rowTitle, customrows.hideDisplay, customrows.indexLocation, customrows.apiType, customrows.createdAt, customrows.updatedAt, posters.poster_id, posters.title, posters.posterURL, posters.posterURL_ATV, posters.productID, posters.channelID, posters.channelID_6001, posters.channelID_6002, posters.channelID_6003, posters.channelID_8601 FROM customrows LEFT JOIN posters ON customrows.customrow_id = posters.customrow_id'
+        'SELECT myhub_customrows.customrow_id, myhub_customrows.rowTitle, myhub_customrows.hideDisplay, myhub_customrows.indexLocation, myhub_customrows.apiType, myhub_customrows.createdAt, myhub_customrows.updatedAt, myhub_posters.poster_id, myhub_posters.title, myhub_posters.posterURL, myhub_posters.posterURL_ATV, myhub_posters.productID, myhub_posters.channelID, myhub_posters.channelID_6001, myhub_posters.channelID_6002, myhub_posters.channelID_6003, myhub_posters.channelID_8601 FROM myhub_customrows LEFT JOIN myhub_posters ON myhub_customrows.customrow_id = myhub_posters.customrow_id'
       );
 
     const remapping = customrows.recordsets[0].reduce(
@@ -196,7 +198,9 @@ const getSingleCustomRow = async (req, res) => {
     let checkRow = await pool
       .request()
       .input('input_rowId', sql.Int, parseInt(rowId))
-      .query('SELECT * from customrows where customrow_id = @input_rowId');
+      .query(
+        'SELECT * from myhub_customrows where customrow_id = @input_rowId'
+      );
     if (checkRow.recordsets[0].length === 0) {
       throw new NotFoundError(`No custom row with id : ${rowId} found`);
     }
@@ -205,7 +209,7 @@ const getSingleCustomRow = async (req, res) => {
       .request()
       .input('input_rowId', sql.Int, parseInt(rowId))
       .query(
-        'SELECT customrows.customrow_id, customrows.rowTitle, customrows.hideDisplay, customrows.indexLocation, customrows.apiType, customrows.createdAt, customrows.updatedAt, posters.poster_id, posters.title, posters.posterURL, posters.posterURL_ATV, posters.productID, posters.channelID, posters.channelID_6001, posters.channelID_6002, posters.channelID_6003, posters.channelID_8601 FROM customrows LEFT JOIN posters ON customrows.customrow_id = posters.customrow_id WHERE customrows.customrow_id = @input_rowId'
+        'SELECT myhub_customrows.customrow_id, myhub_customrows.rowTitle, myhub_customrows.hideDisplay, myhub_customrows.indexLocation, myhub_customrows.apiType, myhub_customrows.createdAt, myhub_customrows.updatedAt, myhub_posters.poster_id, myhub_posters.title, myhub_posters.posterURL, myhub_posters.posterURL_ATV, myhub_posters.productID, myhub_posters.channelID, myhub_posters.channelID_6001, myhub_posters.channelID_6002, myhub_posters.channelID_6003, myhub_posters.channelID_8601 FROM myhub_customrows LEFT JOIN myhub_posters ON myhub_customrows.customrow_id = myhub_posters.customrow_id WHERE myhub_customrows.customrow_id = @input_rowId'
       );
 
     const customRow = customrows.recordsets[0].reduce(
@@ -356,7 +360,7 @@ const deletePoster = async (req, res) => {
       .input('input_rowId', sql.Int, parseInt(rowId))
       .input('input_posterId', sql.Int, parseInt(posterId))
       .query(
-        'SELECT * from posters WHERE customrow_id = @input_rowId AND poster_id = @input_posterId'
+        'SELECT * from myhub_posters WHERE customrow_id = @input_rowId AND poster_id = @input_posterId'
       );
     if (checkPoster.recordsets[0].length === 0) {
       throw new NotFoundError(
@@ -370,7 +374,7 @@ const deletePoster = async (req, res) => {
       .input('input_rowId', sql.Int, parseInt(rowId))
       .input('input_posterId', sql.Int, parseInt(posterId))
       .query(
-        'DELETE posters WHERE customrow_id = @input_rowId AND poster_id = @input_posterId'
+        'DELETE myhub_posters WHERE customrow_id = @input_rowId AND poster_id = @input_posterId'
       );
 
     res.status(StatusCodes.OK).json({ msg: 'Poster successfully deleted.' });
@@ -495,7 +499,9 @@ const createPoster = async (req, res) => {
     let customRow = await pool
       .request()
       .input('input_rowId', sql.Int, parseInt(rowId))
-      .query('SELECT * from customrows where customrow_id = @input_rowId');
+      .query(
+        'SELECT * from myhub_customrows where customrow_id = @input_rowId'
+      );
     if (customRow.recordsets[0].length === 0) {
       throw new NotFoundError(`No custom row with id : ${rowId} found`);
     }
@@ -586,14 +592,14 @@ const createPoster = async (req, res) => {
       .input('input_createdBy', sql.Int, req.user.userId)
       .input('input_customrowid', sql.Int, rowId)
       .query(
-        `INSERT INTO posters (title, productID, channelID, channelID_6001, channelID_6002, channelID_6003, channelID_8601, posterURL, posterURL_ATV, createdBy, customrow_id) VALUES (@input_title, @input_productId, @input_channelId, @input_channelId, @input_channelId, @input_channelId, @input_channelId, @input_posterURL, @input_posterURL_ATV, @input_createdBy, @input_customrowid)`
+        `INSERT INTO myhub_posters (title, productID, channelID, channelID_6001, channelID_6002, channelID_6003, channelID_8601, posterURL, posterURL_ATV, createdBy, customrow_id) VALUES (@input_title, @input_productId, @input_channelId, @input_channelId, @input_channelId, @input_channelId, @input_channelId, @input_posterURL, @input_posterURL_ATV, @input_createdBy, @input_customrowid)`
       );
 
     //query all poster under the same customrow
     let allPoster = await pool
       .request()
       .input('input_rowId', sql.Int, parseInt(rowId))
-      .query('SELECT * from posters where customrow_id = @input_rowId');
+      .query('SELECT * from myhub_posters where customrow_id = @input_rowId');
     const allPosterObj = allPoster.recordsets[0];
 
     let success = customRow.recordsets[0][0];
@@ -636,7 +642,11 @@ const deleteCustomRow = async (req, res) => {
     let customRow = await pool
       .request()
       .input('input_rowId', sql.Int, parseInt(rowId))
-      .query('SELECT * from customrows where customrow_id = @input_rowId');
+      .query(
+        'SELECT * from myhub_customrows where customrow_id = @input_rowId'
+      );
+
+    // console.log('nizar check jap...');
     // console.log(customRow.recordsets[0]);
     if (customRow.recordsets[0].length === 0) {
       throw new NotFoundError(`No custom row with id : ${rowId} found`);
@@ -644,7 +654,7 @@ const deleteCustomRow = async (req, res) => {
 
     let customRowAll = await pool
       .request()
-      .query('SELECT * FROM customrows ORDER BY indexLocation ASC');
+      .query('SELECT * FROM myhub_customrows ORDER BY indexLocation ASC');
     const customRowAllObj = customRowAll.recordsets[0];
 
     const customRowsRemovedX = customRowAllObj.filter(
@@ -661,7 +671,7 @@ const deleteCustomRow = async (req, res) => {
         .input('input_rowId', sql.Int, row.customrow_id)
         .input('input_indexLocation', sql.Int, index)
         .query(
-          'UPDATE customrows SET indexLocation = @input_indexLocation WHERE customrow_id = @input_rowId'
+          'UPDATE myhub_customrows SET indexLocation = @input_indexLocation WHERE customrow_id = @input_rowId'
         );
       // console.log('customrow_id: ' + row.customrow_id);
     }
@@ -670,7 +680,7 @@ const deleteCustomRow = async (req, res) => {
     let userDelete = await pool
       .request()
       .input('input_rowId', sql.Int, parseInt(rowId))
-      .query('DELETE customrows WHERE customrow_id = @input_rowId');
+      .query('DELETE myhub_customrows WHERE customrow_id = @input_rowId');
 
     res
       .status(StatusCodes.OK)
@@ -707,7 +717,9 @@ const updateCustomRow = async (req, res) => {
     let customRow = await pool
       .request()
       .input('input_rowId', sql.Int, parseInt(rowId))
-      .query('SELECT * from customrows where customrow_id = @input_rowId');
+      .query(
+        'SELECT * from myhub_customrows where customrow_id = @input_rowId'
+      );
     // console.log(customRow.recordsets[0]);
     if (customRow.recordsets[0].length === 0) {
       throw new NotFoundError(`No custom row with id : ${rowId} found`);
@@ -719,7 +731,7 @@ const updateCustomRow = async (req, res) => {
         .input('input_rowId', sql.Int, parseInt(rowId))
         .input('input_indexLocation', sql.Int, newIndex)
         .query(
-          'UPDATE customrows SET indexLocation = @input_indexLocation WHERE customrow_id = @input_rowId'
+          'UPDATE myhub_customrows SET indexLocation = @input_indexLocation WHERE customrow_id = @input_rowId'
         );
       res
         .status(StatusCodes.OK)

@@ -60,7 +60,7 @@ const register = async (req, res, next) => {
     let userAlreadyExists = await pool
       .request()
       .input('input_email', sql.VarChar, email)
-      .query('SELECT * from users where email = @input_email');
+      .query('SELECT * from myhub_users where email = @input_email');
     if (userAlreadyExists.recordsets[0].length > 0) {
       throw new BadRequestError(
         'Email already in use. Please use other email.'
@@ -79,14 +79,14 @@ const register = async (req, res, next) => {
       .input('input_email', sql.VarChar, email)
       .input('input_password', sql.VarChar, newPwd)
       .query(
-        `INSERT INTO users (name, email, password, lastName, location, role) VALUES (@input_name,@input_email,@input_password, 'lastname', 'location', 'user')`
+        `INSERT INTO myhub_users (name, email, password, lastName, location, role) VALUES (@input_name,@input_email,@input_password, 'lastname', 'location', 'user')`
       );
 
     //get the new registered user
     let registeredUser = await pool
       .request()
       .input('input_email', sql.VarChar, email)
-      .query('SELECT * from users where email = @input_email');
+      .query('SELECT * from myhub_users where email = @input_email');
     console.log(registeredUser.recordsets[0]);
     //get single user object
     const userObj = registeredUser.recordsets[0][0];
@@ -144,7 +144,7 @@ const login = async (req, res) => {
     let user = await pool
       .request()
       .input('input_email', sql.VarChar, email)
-      .query('SELECT * from users where email = @input_email');
+      .query('SELECT * from myhub_users where email = @input_email');
     if (user.recordsets[0].length === 0) {
       throw new UnauthenticatedError('Invalid credentials');
     }
@@ -212,7 +212,7 @@ const updateUser = async (req, res) => {
       .input('input_lastName', sql.VarChar, lastName)
       .input('input_location', sql.VarChar, location)
       .query(
-        'UPDATE users SET name = @input_name, email = @input_email, lastName = @input_lastName, location = @input_location  where user_id = @input_userId'
+        'UPDATE myhub_users SET name = @input_name, email = @input_email, lastName = @input_lastName, location = @input_location  where user_id = @input_userId'
       );
 
     //create jwt token
@@ -224,7 +224,7 @@ const updateUser = async (req, res) => {
       .request()
       .input('input_userId', sql.Int, req.user.userId)
       .query(
-        'SELECT user_id, name, email, lastName, location from users where user_id = @input_userId'
+        'SELECT user_id, name, email, lastName, location from myhub_users where user_id = @input_userId'
       );
 
     //get single user object

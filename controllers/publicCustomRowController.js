@@ -67,7 +67,7 @@ const getDynamicPlaytvHome = async (req, res) => {
     let customrows = await pool
       .request()
       .query(
-        'SELECT customrows.customrow_id, customrows.rowTitle, customrows.hideDisplay, customrows.indexLocation, customrows.apiType, customrows.createdAt, customrows.updatedAt, posters.poster_id, posters.title, posters.posterURL, posters.posterURL_ATV, posters.productID, posters.channelID, posters.channelID_6001, posters.channelID_6002, posters.channelID_6003, posters.channelID_8601 FROM customrows LEFT JOIN posters ON customrows.customrow_id = posters.customrow_id'
+        'SELECT myhub_customrows.customrow_id, myhub_customrows.rowTitle, myhub_customrows.hideDisplay, myhub_customrows.indexLocation, myhub_customrows.apiType, myhub_customrows.createdAt, myhub_customrows.updatedAt, myhub_posters.poster_id, myhub_posters.title, myhub_posters.posterURL, myhub_posters.posterURL_ATV, myhub_posters.productID, myhub_posters.channelID, myhub_posters.channelID_6001, myhub_posters.channelID_6002, myhub_posters.channelID_6003, myhub_posters.channelID_8601 FROM myhub_customrows LEFT JOIN myhub_posters ON myhub_customrows.customrow_id = myhub_posters.customrow_id'
       );
 
     let counter = 1;
