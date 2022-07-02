@@ -691,7 +691,7 @@ const deleteCustomRow = async (req, res) => {
 const updateCustomRow = async (req, res) => {
   if (process.env.DATABASE_MODE === 'MONGODB') {
     const { rowId } = req.params;
-    const { newIndex, indexUpdate } = req.body;
+    const { newIndex, indexUpdate, rowTitle, hideDisplay, apiType } = req.body;
 
     const customRow = await CustomRow.findOne({ _id: rowId });
     if (!customRow) {
@@ -699,15 +699,32 @@ const updateCustomRow = async (req, res) => {
     }
 
     if (indexUpdate) {
+      // if (!newIndex) {//to recheck this again.
+      //   throw new BadRequestError('Please provide newIndex value');
+      // }
+
       customRow.indexLocation = newIndex;
       const abc = await customRow.save();
       res
         .status(StatusCodes.OK)
         .json({ msg: 'New index succesffully updated', customRow: abc });
     } else {
-      res
-        .status(StatusCodes.OK)
-        .json({ msg: 'Please enter specific params in order to proceed' });
+      // console.log(req.body);
+      // console.log(rowTitle);
+      // if (!rowTitle || !hideDisplay || !apiType) { //to recheck this again.
+      //   throw new BadRequestError(
+      //     'Please provide rowTitle, hideDisplay, and, apiType'
+      //   );
+      // }
+
+      customRow.rowTitle = rowTitle;
+      customRow.hideDisplay = hideDisplay;
+      customRow.apiType = apiType;
+      const abc = await customRow.save();
+      res.status(StatusCodes.OK).json({
+        msg: `Row ${abc._id} details succesfully updated`,
+        customRow: abc,
+      });
     }
   } else {
     const { rowId } = req.params;

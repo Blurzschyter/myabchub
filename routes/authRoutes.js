@@ -1,7 +1,12 @@
 import express from 'express';
 const router = express.Router();
-import { register, login, updateUser } from '../controllers/authController.js';
-import authenticateUser from '../middleware/auth.js';
+import {
+  register,
+  login,
+  updateUser,
+  userListing,
+} from '../controllers/authController.js';
+import { authenticateUser, authorizePermissions } from '../middleware/auth.js';
 import rateLimiter from 'express-rate-limit';
 
 const apiLimiter = rateLimiter({
@@ -14,5 +19,8 @@ const apiLimiter = rateLimiter({
 router.route('/register').post(apiLimiter, register);
 router.route('/login').post(apiLimiter, login);
 router.route('/updateUser').patch(authenticateUser, updateUser);
+router
+  .route('/users')
+  .get(authenticateUser, authorizePermissions('admin'), userListing);
 
 export default router;

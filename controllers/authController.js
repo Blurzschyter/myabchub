@@ -236,4 +236,13 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { register, login, updateUser };
+const userListing = async (req, res) => {
+  if (process.env.DATABASE_MODE === 'MONGODB') {
+    // res.send('userListing');
+    const users = await User.find({});
+    res.status(StatusCodes.OK).json({ users });
+  } else {
+  }
+};
+
+export { register, login, updateUser, userListing };
