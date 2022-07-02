@@ -13,11 +13,9 @@ import {
 import {
   arrayMove,
   SortableContext,
-  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import { Link } from 'react-router-dom';
 
 const CustomRowTable = () => {
   const { isLoading, customRows, getCustomRows, updateRowIndex } =

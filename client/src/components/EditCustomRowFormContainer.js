@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppContext } from '../context/appContext';
-import { FormRow2, Alert, Alert2 } from '../components';
+import { FormRow2, Alert2 } from '../components';
 
 const EditCustomRowFormContainer = ({ customRowObj }) => {
   const { isLoading, displayAlert2, showAlert2, updateRowDetails } =

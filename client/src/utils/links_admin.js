@@ -1,6 +1,6 @@
-import { IoBarChartSharp } from 'react-icons/io5';
-import { MdQueryStats } from 'react-icons/md';
-import { FaWpforms } from 'react-icons/fa';
+// import { IoBarChartSharp } from 'react-icons/io5';
+// import { MdQueryStats } from 'react-icons/md';
+// import { FaWpforms } from 'react-icons/fa';
 import { ImProfile } from 'react-icons/im';
 
 // const links = [
@@ -49,6 +49,13 @@ import { ImProfile } from 'react-icons/im';
 // ];
 
 const links = [
+  {
+    id: 3,
+    text: 'Administrator',
+    path: '/profile',
+    icon: <ImProfile />,
+    boxicon: 'bx bxs-data',
+  },
   {
     id: 4,
     text: 'Profile',

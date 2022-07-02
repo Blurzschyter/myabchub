@@ -1,8 +1,4 @@
-import {
-  AddCustomRowContainer,
-  CustomRowListContainer,
-  CustomRowTable,
-} from '../../components';
+import { AddCustomRowContainer, CustomRowTable } from '../../components';
 import { useAppContext } from '../../context/appContext';
 
 const CustomRow = () => {
