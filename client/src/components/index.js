@@ -20,6 +20,8 @@ import Channel from './Channel';
 import AddChannelFormContainer from './AddChannelFormContainer';
 import CustomRowTable from './CustomRowTable';
 import CustomRowTableItem from './CustomRowTableItem';
+import EditCustomRowFormContainer from './EditCustomRowFormContainer';
+import Alert2 from './Alert2';
 
 export {
   FormRow,
@@ -41,4 +43,6 @@ export {
   AddChannelFormContainer,
   CustomRowTable,
   CustomRowTableItem,
+  EditCustomRowFormContainer,
+  Alert2,
 };

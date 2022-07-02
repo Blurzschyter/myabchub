@@ -48,6 +48,12 @@ import {
   EDIT_CUSTOMROW_BEGIN,
   EDIT_CUSTOMROW_SUCCESS,
   EDIT_CUSTOMROW_ERROR,
+  DISPLAY_ALERT_2,
+  CLEAR_ALERT_2,
+  DISPLAY_ALERT_2_TEXT,
+  EDIT_CUSTOMROW_DETAILS_BEGIN,
+  EDIT_CUSTOMROW_DETAILS_SUCCESS,
+  EDIT_CUSTOMROW_DETAILS_ERROR,
 } from './actions';
 import reducer from './reducer';
 
@@ -103,6 +109,9 @@ const initialState = {
     54199255: 'unifi Sports 4',
     41208891: 'unifi Sports 5',
   },
+  showAlert2: false,
+  alert2Text: '',
+  alert2Type: '',
 };
 
 const AppContext = React.createContext();
@@ -575,6 +584,48 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const displayAlert2 = () => {
+    dispatch({ type: DISPLAY_ALERT_2 });
+    clearAlert2();
+  };
+
+  const clearAlert2 = () => {
+    setTimeout(() => {
+      dispatch({ type: CLEAR_ALERT_2 });
+    }, 3000);
+  };
+
+  const displayAlert2Text = (alertMsg) => {
+    dispatch({ type: DISPLAY_ALERT_2_TEXT, payload: { alertMsg } });
+    clearAlert2();
+  };
+
+  const updateRowDetails = async (customRowUpdateObj) => {
+    // console.log('customRowUpdateObj');
+    // console.log(customRowUpdateObj);
+    dispatch({ type: EDIT_CUSTOMROW_DETAILS_BEGIN });
+    try {
+      await authFetch.patch(
+        `/customPlayTVHomeRow/${customRowUpdateObj.rowId}`,
+        {
+          indexUpdate: false,
+          rowTitle: customRowUpdateObj.rowTitle,
+          hideDisplay: customRowUpdateObj.hideDisplay,
+          apiType: customRowUpdateObj.apiType,
+        }
+      );
+      dispatch({ type: EDIT_CUSTOMROW_DETAILS_SUCCESS });
+      getSingleCustomRow(customRowUpdateObj.rowId);
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_CUSTOMROW_DETAILS_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -604,6 +655,9 @@ const AppProvider = ({ children }) => {
         createNewPoster,
         deleteRow,
         updateRowIndex,
+        displayAlert2,
+        displayAlert2Text,
+        updateRowDetails,
       }}
     >
       {children}

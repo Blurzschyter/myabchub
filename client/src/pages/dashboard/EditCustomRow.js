@@ -1,6 +1,7 @@
 import {
   ChannelListContainer,
   AddChannelFormContainer,
+  EditCustomRowFormContainer,
 } from '../../components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -39,6 +40,7 @@ const EditCustomRow = () => {
       <header className='page-header'>
         <h2>Configure Dynamic Row</h2>
       </header>
+      <EditCustomRowFormContainer customRowObj={selectedCustomRowObj} />
       <AddChannelFormContainer customRowId={id} />
       <h2>Poster Listing</h2>
       <hr className='solid mt-3 opacity-4' />

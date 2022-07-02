@@ -45,6 +45,12 @@ import {
   EDIT_CUSTOMROW_BEGIN,
   EDIT_CUSTOMROW_SUCCESS,
   EDIT_CUSTOMROW_ERROR,
+  DISPLAY_ALERT_2,
+  CLEAR_ALERT_2,
+  DISPLAY_ALERT_2_TEXT,
+  EDIT_CUSTOMROW_DETAILS_BEGIN,
+  EDIT_CUSTOMROW_DETAILS_SUCCESS,
+  EDIT_CUSTOMROW_DETAILS_ERROR,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -471,6 +477,60 @@ const reducer = (state, action) => {
   }
 
   if (action.type === EDIT_CUSTOMROW_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      // showAlert: true,
+      // alertType: 'danger',
+      // alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === DISPLAY_ALERT_2) {
+    return {
+      ...state,
+      showAlert2: true,
+      alert2Type: 'danger',
+      alert2Text: 'Please provide all values!',
+    };
+  }
+
+  if (action.type === CLEAR_ALERT_2) {
+    return {
+      ...state,
+      showAlert2: false,
+      alert2Type: '',
+      alert2Text: '',
+    };
+  }
+
+  if (action.type === DISPLAY_ALERT_2_TEXT) {
+    return {
+      ...state,
+      showAlert2: true,
+      alert2Type: 'danger',
+      alert2Text: action.payload.alertMsg,
+    };
+  }
+
+  if (action.type === EDIT_CUSTOMROW_DETAILS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === EDIT_CUSTOMROW_DETAILS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      // showAlert: true,
+      // alertType: 'success',
+      // alertText: 'Job Updated!',
+    };
+  }
+
+  if (action.type === EDIT_CUSTOMROW_DETAILS_ERROR) {
     return {
       ...state,
       isLoading: false,

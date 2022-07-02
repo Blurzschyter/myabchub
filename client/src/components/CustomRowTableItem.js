@@ -86,7 +86,11 @@ const CustomRowTableItem = ({
         //   justifyContent: 'center',
         // }}
       >
-        <Link to={`/customrow/${_id}`} onClick={() => setEditCustomRow(_id)}>
+        <Link
+          style={{ marginRight: '25px' }}
+          to={`/customrow/${_id}`}
+          onClick={() => setEditCustomRow(_id)}
+        >
           {/* <a href> */}
           <i className='fas fa-cog' />
           {/* </a> */}
