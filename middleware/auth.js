@@ -1,7 +1,7 @@
-import { UnauthenticatedError } from '../errors/index.js';
+import { UnauthenticatedError, UnauthorizedError } from '../errors/index.js';
 import jwt from 'jsonwebtoken';
 
-const auth = async (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
   // console.log('authenticate user middleware');
   const authHeader = req.headers.authorization;
   // console.log(authHeader);
@@ -21,4 +21,18 @@ const auth = async (req, res, next) => {
   }
 };
 
-export default auth;
+const authorizePermissions = (...rest) => {
+  //callback function
+  return (req, res, next) => {
+    // console.log(req.user);
+    if (!rest.includes(req.user.role)) {
+      //if user.role is not sebahagian dari user role yg di pass as params
+      throw new UnauthorizedError(
+        'Unauthorized access to this route. Please login using authorized role credential.'
+      );
+    }
+    next();
+  };
+};
+
+export { authenticateUser, authorizePermissions };
