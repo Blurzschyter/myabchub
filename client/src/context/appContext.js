@@ -54,6 +54,9 @@ import {
   EDIT_CUSTOMROW_DETAILS_BEGIN,
   EDIT_CUSTOMROW_DETAILS_SUCCESS,
   EDIT_CUSTOMROW_DETAILS_ERROR,
+  LOADING_START,
+  LOADING_END,
+  GET_USERS_SUCCESS,
 } from './actions';
 import reducer from './reducer';
 
@@ -112,6 +115,7 @@ const initialState = {
   showAlert2: false,
   alert2Text: '',
   alert2Type: '',
+  users: [],
 };
 
 const AppContext = React.createContext();
@@ -626,6 +630,28 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //get list of created user
+  const getUsers = async () => {
+    let url = `/auth/users`;
+
+    dispatch({ type: LOADING_START });
+    try {
+      const { data } = await authFetch(url);
+      // console.log(data.users);
+      dispatch({ type: LOADING_END });
+      dispatch({
+        type: GET_USERS_SUCCESS,
+        payload: {
+          users: data.users,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+      logoutUser();
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -658,6 +684,7 @@ const AppProvider = ({ children }) => {
         displayAlert2,
         displayAlert2Text,
         updateRowDetails,
+        getUsers,
       }}
     >
       {children}

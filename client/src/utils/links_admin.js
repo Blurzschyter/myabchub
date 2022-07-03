@@ -52,7 +52,7 @@ const links = [
   {
     id: 3,
     text: 'Administrator',
-    path: '/profile',
+    path: '/admin',
     icon: <ImProfile />,
     boxicon: 'bx bxs-data',
   },

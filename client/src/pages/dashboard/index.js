@@ -6,6 +6,7 @@ import Stats from './Stats.js';
 
 import CustomRow from './CustomRow.js';
 import EditCustomRow from './EditCustomRow.js';
+import Administrator from './Administrator.js';
 
 export {
   AddJob,
@@ -15,4 +16,5 @@ export {
   Stats,
   CustomRow,
   EditCustomRow,
+  Administrator,
 };

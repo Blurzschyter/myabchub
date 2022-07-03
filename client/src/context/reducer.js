@@ -51,6 +51,9 @@ import {
   EDIT_CUSTOMROW_DETAILS_BEGIN,
   EDIT_CUSTOMROW_DETAILS_SUCCESS,
   EDIT_CUSTOMROW_DETAILS_ERROR,
+  LOADING_START,
+  LOADING_END,
+  GET_USERS_SUCCESS,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -537,6 +540,28 @@ const reducer = (state, action) => {
       // showAlert: true,
       // alertType: 'danger',
       // alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === LOADING_START) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === LOADING_END) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === GET_USERS_SUCCESS) {
+    return {
+      ...state,
+      users: action.payload.users,
     };
   }
 

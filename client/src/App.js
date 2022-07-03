@@ -8,6 +8,7 @@ import {
   Stats,
   CustomRow,
   EditCustomRow,
+  Administrator,
 } from './pages/dashboard';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route index element={<CustomRow />} />
           <Route path='customrow/:id' element={<EditCustomRow />} />
           <Route path='/playground' element={<Playground />} />
+          <Route path='/admin' element={<Administrator />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />
