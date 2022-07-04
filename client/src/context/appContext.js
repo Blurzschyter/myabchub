@@ -631,7 +631,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-    clearAlert();
+    clearAlert2();
   };
 
   //get list of created user

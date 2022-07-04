@@ -728,7 +728,7 @@ const updateCustomRow = async (req, res) => {
     }
   } else {
     const { rowId } = req.params;
-    const { newIndex, indexUpdate } = req.body;
+    const { newIndex, indexUpdate, rowTitle, hideDisplay, apiType } = req.body;
 
     let pool = await sql.connect(config);
     let customRow = await pool
@@ -754,9 +754,36 @@ const updateCustomRow = async (req, res) => {
         .status(StatusCodes.OK)
         .json({ msg: 'New index succesffully updated', userUpdate });
     } else {
+      // if (!rowTitle || !hideDisplay || !apiType) {//to recheck this again.
+      //   throw new BadRequestError(
+      //     'Please provide rowTitle, hideDisplay, and, apiType'
+      //   );
+      // }
+
+      // customRow.rowTitle = rowTitle;
+      // customRow.hideDisplay = hideDisplay;
+      // customRow.apiType = apiType;
+      // const abc = await customRow.save();
+      // res.status(StatusCodes.OK).json({
+      //   msg: `Row ${abc._id} details succesfully updated`,
+      //   customRow: abc,
+      // });
+
+      let userUpdate = await pool
+        .request()
+        .input('input_rowId', sql.Int, parseInt(rowId))
+        .input('input_rowTitle', sql.VarChar, rowTitle)
+        .input('input_hideDisplay', sql.Bit, hideDisplay === true ? 1 : 0)
+        .input('input_apiType', sql.VarChar, apiType)
+        .query(
+          'UPDATE myhub_customrows SET rowTitle = @input_rowTitle, hideDisplay = @input_hideDisplay, apiType = @input_apiType WHERE customrow_id = @input_rowId'
+        );
+
+      //'UPDATE myhub_users SET name = @input_name, email = @input_email, lastName = @input_lastName, location = @input_location  where user_id = @input_userId'
+
       res
         .status(StatusCodes.OK)
-        .json({ msg: 'Please enter specific params in order to proceed' });
+        .json({ msg: 'New index succesffully updated', userUpdate });
     }
   }
 };

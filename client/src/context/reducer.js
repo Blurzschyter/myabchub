@@ -530,9 +530,9 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      // showAlert: true,
-      // alertType: 'success',
-      // alertText: 'Job Updated!',
+      showAlert2: true,
+      alert2Type: 'success',
+      alert2Text: 'Dynamic Row detail updated!',
     };
   }
 
@@ -540,9 +540,9 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      // showAlert: true,
-      // alertType: 'danger',
-      // alertText: action.payload.msg,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     };
   }
 
