@@ -80,7 +80,7 @@ const Administrator = () => {
                         <td className='actions'>
                           <Link
                             to={`/user/${item._id}`}
-                            onClick={() => console.log('action press')}
+                            // onClick={() => console.log('action press')}
                             className='delete-row'
                           >
                             <i className='far fa-edit' />

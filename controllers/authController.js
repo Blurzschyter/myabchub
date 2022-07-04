@@ -1,6 +1,10 @@
 import User from '../models/User.js';
 import { StatusCodes } from 'http-status-codes';
-import { BadRequestError, UnauthenticatedError } from '../errors/index.js';
+import {
+  BadRequestError,
+  UnauthenticatedError,
+  NotFoundError,
+} from '../errors/index.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import sql from 'mssql';
@@ -274,6 +278,23 @@ const updateSingleUser = async (req, res) => {
   }
 };
 
+const deleteSingleUser = async (req, res) => {
+  if (process.env.DATABASE_MODE === 'MONGODB') {
+    // res.send('deleteSingleUser');
+    const { id: userId } = req.params;
+    const selectedUser = await User.findOne({ _id: userId });
+    if (!selectedUser) {
+      throw new NotFoundError(`No user with id : ${userId} found`);
+    }
+    await selectedUser.remove();
+
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: 'Specific user successfully deleted' });
+  } else {
+  }
+};
+
 export {
   register,
   login,
@@ -281,4 +302,5 @@ export {
   userListing,
   getSingleUser,
   updateSingleUser,
+  deleteSingleUser,
 };

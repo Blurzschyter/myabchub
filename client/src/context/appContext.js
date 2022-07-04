@@ -703,6 +703,17 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const deleteSingleUser = async (userId) => {
+    dispatch({ type: LOADING_START });
+    try {
+      await authFetch.delete(`/auth/users/${userId}`);
+      dispatch({ type: LOADING_END });
+    } catch (error) {
+      console.log(error.response);
+      logoutUser();
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -738,6 +749,7 @@ const AppProvider = ({ children }) => {
         getUsers,
         getSingleUser,
         updateSingleUser,
+        deleteSingleUser,
       }}
     >
       {children}

@@ -1,10 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FormRow2, Alert, FormRowSelect2 } from '.';
 import { useAppContext } from '../context/appContext';
 
 const UserUpdateForm = ({ selectedUserObj }) => {
-  const { isLoading, showAlert, displayAlert, updateSingleUser } =
-    useAppContext();
+  const {
+    isLoading,
+    showAlert,
+    displayAlert,
+    updateSingleUser,
+    deleteSingleUser,
+  } = useAppContext();
+  const navigate = useNavigate();
+
   const [name, setName] = useState(selectedUserObj.name);
   const [email, setEmail] = useState(selectedUserObj.email);
   const [role, setRole] = useState(selectedUserObj.role);
@@ -26,13 +34,17 @@ const UserUpdateForm = ({ selectedUserObj }) => {
   };
 
   const handleOptionChange = (e) => {
-    console.log('handleOptionChange');
-    console.log(e.target.value);
     if (e.target.value === 'user') {
       setRole('user');
     } else {
       setRole('admin');
     }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    await deleteSingleUser(selectedUserObj._id);
+    navigate('/admin');
   };
 
   return (
@@ -103,31 +115,6 @@ const UserUpdateForm = ({ selectedUserObj }) => {
                   </div>
                 </div>
               </div>
-
-              {/* <!-- Modal Form --> */}
-              <div
-                id='modalForm'
-                className='modal-block modal-block-primary mfp-hide'
-              >
-                <section className='card'>
-                  <header className='card-header'>
-                    <h2 className='card-title'>Registration Form</h2>
-                  </header>
-                  <div className='card-body'></div>
-                  <footer className='card-footer'>
-                    <div className='row'>
-                      <div className='col-md-12 text-end'>
-                        <button className='btn btn-primary modal-confirm'>
-                          Submit
-                        </button>
-                        <button className='btn btn-default modal-dismiss'>
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </footer>
-                </section>
-              </div>
             </div>
             <footer className='card-footer text-end'>
               <button
@@ -142,10 +129,12 @@ const UserUpdateForm = ({ selectedUserObj }) => {
               <button
                 type='button'
                 className='btn btn-danger'
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log('button delete pressed');
-                }}
+                // onClick={(e) => {
+                //   e.preventDefault();
+                //   // console.log('button delete pressed');
+                //   await updateSingleUser(selectedUserObj._id)
+                // }}
+                onClick={handleDelete}
               >
                 Delete User
               </button>

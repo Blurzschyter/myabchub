@@ -7,6 +7,7 @@ import {
   userListing,
   getSingleUser,
   updateSingleUser,
+  deleteSingleUser,
 } from '../controllers/authController.js';
 import { authenticateUser, authorizePermissions } from '../middleware/auth.js';
 import rateLimiter from 'express-rate-limit';
@@ -27,6 +28,7 @@ router
 router
   .route('/users/:id')
   .get(authenticateUser, authorizePermissions('admin'), getSingleUser)
-  .patch(authenticateUser, authorizePermissions('admin'), updateSingleUser);
+  .patch(authenticateUser, authorizePermissions('admin'), updateSingleUser)
+  .delete(authenticateUser, authorizePermissions('admin'), deleteSingleUser);
 
 export default router;
