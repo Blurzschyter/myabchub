@@ -97,7 +97,7 @@ const register = async (req, res, next) => {
 
     //create jwt token
     const token = jwt.sign(
-      { userId: userObj.user_id },
+      { userId: userObj.user_id, role: 'user' },
       process.env.JWT_SECRET,
       {
         expiresIn: process.env.JWT_LIFETIME,
@@ -162,7 +162,7 @@ const login = async (req, res) => {
 
     //create jwt token
     const token = jwt.sign(
-      { userId: userObj.user_id },
+      { userId: userObj.user_id, role: userObj.role },
       process.env.JWT_SECRET,
       {
         expiresIn: process.env.JWT_LIFETIME,
@@ -219,20 +219,24 @@ const updateUser = async (req, res) => {
         'UPDATE myhub_users SET name = @input_name, email = @input_email, lastName = @input_lastName, location = @input_location  where user_id = @input_userId'
       );
 
-    //create jwt token
-    const token = jwt.sign({ userId: req.user_id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_LIFETIME,
-    });
-
     let user = await pool
       .request()
       .input('input_userId', sql.Int, req.user.userId)
       .query(
-        'SELECT user_id, name, email, lastName, location from myhub_users where user_id = @input_userId'
+        'SELECT user_id, name, email, lastName, location, role from myhub_users where user_id = @input_userId'
       );
 
     //get single user object
     const userObj = user.recordsets[0][0];
+
+    //create jwt token
+    const token = jwt.sign(
+      { userId: req.user_id, role: userObj.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_LIFETIME,
+      }
+    );
 
     res
       .status(StatusCodes.OK)
@@ -246,6 +250,14 @@ const userListing = async (req, res) => {
     const users = await User.find({});
     res.status(StatusCodes.OK).json({ users });
   } else {
+    let pool = await sql.connect(config);
+    let userlist = await pool
+      .request()
+      .query(
+        'SELECT user_id AS _id , name, email, lastName, location, role FROM myhub_users'
+      );
+
+    res.status(StatusCodes.OK).json({ users: userlist.recordsets[0] });
   }
 };
 
