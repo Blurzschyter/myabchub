@@ -37,11 +37,11 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
   app.use(morgan('dev'));
 }
 
-if (process.env.NODE_ENV === 'PRODUCTION') {
-  // set static page from build folder
-  const __dirname = dirname(fileURLToPath(import.meta.url));
-  app.use(express.static(path.resolve(__dirname, './client/build')));
-}
+// if (process.env.NODE_ENV === 'PRODUCTION') {
+// set static page from build folder
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname, './client/build')));
+// }
 
 app.use(express.static('./public')); //to make the uploaded files publically available
 app.use(cors());
