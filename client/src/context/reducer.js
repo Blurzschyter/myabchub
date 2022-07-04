@@ -576,6 +576,16 @@ const reducer = (state, action) => {
   }
 
   if (action.type === EDIT_SUCCESS) {
+    if (action.payload.alertType === 2) {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert2: true,
+        alert2Type: 'success',
+        alert2Text: action.payload.msg,
+      };
+    }
+
     return {
       ...state,
       isLoading: false,
@@ -586,6 +596,16 @@ const reducer = (state, action) => {
   }
 
   if (action.type === EDIT_ERROR) {
+    if (action.payload.alertType === 2) {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert2: true,
+        alert2Type: 'danger',
+        alert2Text: action.payload.msg,
+      };
+    }
+
     return {
       ...state,
       isLoading: false,

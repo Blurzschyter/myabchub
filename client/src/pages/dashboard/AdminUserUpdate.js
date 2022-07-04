@@ -1,29 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppContext } from '../../context/appContext';
-import { UserUpdateForm } from '../../components';
+import { UserUpdateForm, UserResetPasswordForm } from '../../components';
 
 const AdminUserUpdate = () => {
-  const { isLoading, getSingleUser, selectedUserObj, showAlert } =
-    useAppContext();
+  const { getSingleUser, selectedUserObj } = useAppContext();
   const { id } = useParams();
-
-  // if (Object.keys(selectedUserObj).length === 0) {
-  //   console.log('useEffect');
-  //   console.log(selectedUserObj);
-  // }
 
   useEffect(() => {
     getSingleUser(id);
-    // setName('selectedUserObj.name');
-
-    // const getData = async () => {
-    //   await getSingleUser(id);
-    //   console.log('useEffect');
-    //   console.log(selectedUserObj);
-    //   // setName(selectedUserObj.name);
-    // };
-    // getData();
   }, []);
 
   if (Object.keys(selectedUserObj).length === 0) {
@@ -46,6 +31,8 @@ const AdminUserUpdate = () => {
       </header>
       <hr className='solid mt-3 opacity-4' />
       <UserUpdateForm selectedUserObj={selectedUserObj} />
+      <hr className='solid mt-3 opacity-4' />
+      <UserResetPasswordForm selectedUserObj={selectedUserObj} />
     </section>
   );
 };

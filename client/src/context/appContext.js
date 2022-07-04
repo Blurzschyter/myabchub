@@ -687,7 +687,7 @@ const AppProvider = ({ children }) => {
         name: userUpdateObj.name,
         role: userUpdateObj.role,
       });
-      console.log(data);
+      // console.log(data);
       dispatch({ type: LOADING_END });
       dispatch({
         type: EDIT_SUCCESS,
@@ -712,6 +712,39 @@ const AppProvider = ({ children }) => {
       console.log(error.response);
       logoutUser();
     }
+  };
+
+  const resetSingleUserPassword = async (userUpdateObj) => {
+    console.log(userUpdateObj);
+    let url = `/auth/reset/${userUpdateObj.userId}`;
+
+    dispatch({ type: LOADING_START });
+    try {
+      const { data } = await authFetch.patch(url, {
+        newPassword: userUpdateObj.password,
+      });
+      // console.log(data);
+      dispatch({ type: LOADING_END });
+      dispatch({
+        type: EDIT_SUCCESS,
+        payload: {
+          alertType: 2,
+          msg: 'Password successfully reset!',
+        },
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_ERROR,
+        payload: {
+          alertType: 2,
+          msg: error.response.data.msg,
+        },
+      });
+    }
+    setTimeout(() => {
+      dispatch({ type: CLEAR_ALERT_2 });
+    }, 3000);
   };
 
   return (
@@ -750,6 +783,7 @@ const AppProvider = ({ children }) => {
         getSingleUser,
         updateSingleUser,
         deleteSingleUser,
+        resetSingleUserPassword,
       }}
     >
       {children}

@@ -23,6 +23,7 @@ import CustomRowTableItem from './CustomRowTableItem';
 import EditCustomRowFormContainer from './EditCustomRowFormContainer';
 import Alert2 from './Alert2';
 import UserUpdateForm from './UserUpdateForm';
+import UserResetPasswordForm from './UserResetPasswordForm';
 
 export {
   FormRow,
@@ -47,4 +48,5 @@ export {
   EditCustomRowFormContainer,
   Alert2,
   UserUpdateForm,
+  UserResetPasswordForm,
 };

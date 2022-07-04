@@ -295,6 +295,28 @@ const deleteSingleUser = async (req, res) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+  if (process.env.DATABASE_MODE === 'MONGODB') {
+    // res.send('resetPassword');
+    const { id: userId } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      throw new BadRequestError('Please provide the new password');
+    }
+
+    const selectedUser = await User.findOne({ _id: userId });
+    if (!selectedUser) {
+      throw new NotFoundError(`No user with id : ${userId} found`);
+    }
+    selectedUser.password = newPassword;
+    await selectedUser.save();
+
+    res.status(StatusCodes.OK).json({ msg: 'Password successfully reset' });
+  } else {
+  }
+};
+
 export {
   register,
   login,
@@ -303,4 +325,5 @@ export {
   getSingleUser,
   updateSingleUser,
   deleteSingleUser,
+  resetPassword,
 };

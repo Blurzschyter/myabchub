@@ -129,11 +129,6 @@ const UserUpdateForm = ({ selectedUserObj }) => {
               <button
                 type='button'
                 className='btn btn-danger'
-                // onClick={(e) => {
-                //   e.preventDefault();
-                //   // console.log('button delete pressed');
-                //   await updateSingleUser(selectedUserObj._id)
-                // }}
                 onClick={handleDelete}
               >
                 Delete User

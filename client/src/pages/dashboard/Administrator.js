@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  AddCustomRowContainer,
-  CustomRowTable,
-  LoadingNew,
-} from '../../components';
+import { LoadingNew } from '../../components';
 import { useAppContext } from '../../context/appContext';
 
 const Administrator = () => {
