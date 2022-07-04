@@ -36,7 +36,7 @@ const Register = () => {
       displayAlert();
       return;
     }
-    console.log('nizar here...');
+    // console.log('nizar here...');
     const currentUser = { name, email, password };
     if (isMember) {
       // console.log('already a member');

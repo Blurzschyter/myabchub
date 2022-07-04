@@ -7,6 +7,7 @@ import Stats from './Stats.js';
 import CustomRow from './CustomRow.js';
 import EditCustomRow from './EditCustomRow.js';
 import Administrator from './Administrator.js';
+import AdminUserUpdate from './AdminUserUpdate.js';
 
 export {
   AddJob,
@@ -17,4 +18,5 @@ export {
   CustomRow,
   EditCustomRow,
   Administrator,
+  AdminUserUpdate,
 };

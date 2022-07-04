@@ -245,4 +245,40 @@ const userListing = async (req, res) => {
   }
 };
 
-export { register, login, updateUser, userListing };
+const getSingleUser = async (req, res) => {
+  if (process.env.DATABASE_MODE === 'MONGODB') {
+    // res.send('getSingleUser');
+    const { id: userId } = req.params;
+    const user = await User.findOne({ _id: userId });
+    res.status(StatusCodes.OK).json({ user });
+  } else {
+  }
+};
+
+const updateSingleUser = async (req, res) => {
+  if (process.env.DATABASE_MODE === 'MONGODB') {
+    // res.send('updateSingleUser');
+    const { id: userId } = req.params;
+    const { name, role } = req.body;
+    if (!name || !role) {
+      throw new BadRequestError('Please provide name, role');
+    }
+
+    const user = await User.findOne({ _id: userId });
+    user.name = name;
+    user.role = role;
+    await user.save();
+
+    res.status(StatusCodes.OK).json({ user });
+  } else {
+  }
+};
+
+export {
+  register,
+  login,
+  updateUser,
+  userListing,
+  getSingleUser,
+  updateSingleUser,
+};

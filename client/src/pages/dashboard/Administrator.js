@@ -1,15 +1,40 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AddCustomRowContainer, CustomRowTable } from '../../components';
+import {
+  AddCustomRowContainer,
+  CustomRowTable,
+  LoadingNew,
+} from '../../components';
 import { useAppContext } from '../../context/appContext';
 
 const Administrator = () => {
-  const { users, getUsers } = useAppContext();
+  const { users, getUsers, isLoading } = useAppContext();
 
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line
   }, []);
+
+  if (isLoading) {
+    return <LoadingNew style={{ margin: '0 auto' }} />;
+  }
+
+  if (users.length === 0) {
+    return (
+      <section role='main' className='content-body'>
+        <header className='page-header'>
+          <h2>Administrator</h2>
+        </header>
+        <div>
+          <h4 className='mt-0 mb-0 font-weight-bold text-dark'>
+            No user list to display
+          </h4>
+          {/* <p>Block Widgets are perfect to show some statistics.</p> */}
+        </div>
+        <hr className='solid mt-3 opacity-4' />
+      </section>
+    );
+  }
 
   return (
     <section role='main' className='content-body'>

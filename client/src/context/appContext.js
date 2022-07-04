@@ -57,6 +57,9 @@ import {
   LOADING_START,
   LOADING_END,
   GET_USERS_SUCCESS,
+  GET_SINGLE_USER_SUCCESS,
+  EDIT_SUCCESS,
+  EDIT_ERROR,
 } from './actions';
 import reducer from './reducer';
 
@@ -116,6 +119,7 @@ const initialState = {
   alert2Text: '',
   alert2Type: '',
   users: [],
+  selectedUserObj: {},
 };
 
 const AppContext = React.createContext();
@@ -652,6 +656,53 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getSingleUser = async (userId) => {
+    let url = `/auth/users/${userId}`;
+
+    dispatch({ type: LOADING_START });
+    try {
+      const { data } = await authFetch(url);
+      // console.log(data);
+      dispatch({ type: LOADING_END });
+      dispatch({
+        type: GET_SINGLE_USER_SUCCESS,
+        payload: {
+          selectedUserObj: data.user,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+      logoutUser();
+    }
+    clearAlert();
+  };
+
+  const updateSingleUser = async (userUpdateObj) => {
+    console.log(userUpdateObj);
+    let url = `/auth/users/${userUpdateObj.userId}`;
+
+    dispatch({ type: LOADING_START });
+    try {
+      const { data } = await authFetch.patch(url, {
+        name: userUpdateObj.name,
+        role: userUpdateObj.role,
+      });
+      console.log(data);
+      dispatch({ type: LOADING_END });
+      dispatch({
+        type: EDIT_SUCCESS,
+        payload: { msg: 'User detail updated!' },
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -685,6 +736,8 @@ const AppProvider = ({ children }) => {
         displayAlert2Text,
         updateRowDetails,
         getUsers,
+        getSingleUser,
+        updateSingleUser,
       }}
     >
       {children}

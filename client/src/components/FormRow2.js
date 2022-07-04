@@ -1,4 +1,4 @@
-const FormRow = ({ type, name, value, handleChange, labelText }) => {
+const FormRow = ({ type, name, value, handleChange, labelText, readonly }) => {
   return (
     <div className='form-group'>
       <label className='col-form-label' htmlFor={name}>
@@ -11,6 +11,7 @@ const FormRow = ({ type, name, value, handleChange, labelText }) => {
         onChange={handleChange}
         className='form-control'
         id='formGroupExampleInput'
+        readOnly={readonly}
         // placeholder
       />
     </div>

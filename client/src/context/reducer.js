@@ -54,6 +54,9 @@ import {
   LOADING_START,
   LOADING_END,
   GET_USERS_SUCCESS,
+  GET_SINGLE_USER_SUCCESS,
+  EDIT_SUCCESS,
+  EDIT_ERROR,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -562,6 +565,33 @@ const reducer = (state, action) => {
     return {
       ...state,
       users: action.payload.users,
+    };
+  }
+
+  if (action.type === GET_SINGLE_USER_SUCCESS) {
+    return {
+      ...state,
+      selectedUserObj: action.payload.selectedUserObj,
+    };
+  }
+
+  if (action.type === EDIT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === EDIT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     };
   }
 
