@@ -334,9 +334,10 @@ const updateSingleUser = async (req, res) => {
 };
 
 const deleteSingleUser = async (req, res) => {
+  // res.send('deleteSingleUser');
+  const { id: userId } = req.params;
+
   if (process.env.DATABASE_MODE === 'MONGODB') {
-    // res.send('deleteSingleUser');
-    const { id: userId } = req.params;
     const selectedUser = await User.findOne({ _id: userId });
     if (!selectedUser) {
       throw new NotFoundError(`No user with id : ${userId} found`);
@@ -347,6 +348,26 @@ const deleteSingleUser = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ msg: 'Specific user successfully deleted' });
   } else {
+    let pool = await sql.connect(config);
+    let user = await pool
+      .request()
+      .input('input_userId', sql.Int, parseInt(userId))
+      .query(
+        'SELECT user_id AS _id , name, email, lastName, location, role FROM myhub_users WHERE user_id = @input_userId'
+      );
+    if (user.recordsets[0].length === 0) {
+      throw new NotFoundError(`No user with id : ${userId} found`);
+    }
+
+    //proceed delete the item
+    let userDelete = await pool
+      .request()
+      .input('input_userId', sql.Int, parseInt(userId))
+      .query('DELETE myhub_users WHERE user_id = @input_userId');
+
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: 'Specific user successfully deleted' });
   }
 };
 
