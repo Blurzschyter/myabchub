@@ -285,14 +285,14 @@ const getSingleUser = async (req, res) => {
 };
 
 const updateSingleUser = async (req, res) => {
-  if (process.env.DATABASE_MODE === 'MONGODB') {
-    // res.send('updateSingleUser');
-    const { id: userId } = req.params;
-    const { name, role } = req.body;
-    if (!name || !role) {
-      throw new BadRequestError('Please provide name, role');
-    }
+  // res.send('updateSingleUser');
+  const { id: userId } = req.params;
+  const { name, role } = req.body;
+  if (!name || !role) {
+    throw new BadRequestError('Please provide name, role');
+  }
 
+  if (process.env.DATABASE_MODE === 'MONGODB') {
     const user = await User.findOne({ _id: userId });
     user.name = name;
     user.role = role;
@@ -300,6 +300,36 @@ const updateSingleUser = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ user });
   } else {
+    let pool = await sql.connect(config);
+    let user = await pool
+      .request()
+      .input('input_userId', sql.Int, parseInt(userId))
+      .query(
+        'SELECT user_id AS _id , name, email, lastName, location, role FROM myhub_users WHERE user_id = @input_userId'
+      );
+    if (user.recordsets[0].length === 0) {
+      throw new NotFoundError(`No user with id : ${userId} found`);
+    }
+
+    let userUpdate = await pool
+      .request()
+      .input('input_userId', sql.Int, parseInt(userId))
+      .input('input_name', sql.VarChar, name)
+      .input('input_role', sql.VarChar, role)
+      .query(
+        'UPDATE myhub_users SET name = @input_name, role = @input_role WHERE user_id = @input_userId'
+      );
+
+    let latestInfo = await pool
+      .request()
+      .input('input_userId', sql.Int, parseInt(userId))
+      .query(
+        'SELECT user_id AS _id , name, email, lastName, location, role FROM myhub_users WHERE user_id = @input_userId'
+      );
+
+    res.status(StatusCodes.OK).json({
+      user: latestInfo.recordsets[0][0],
+    });
   }
 };
 
