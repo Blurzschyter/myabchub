@@ -262,12 +262,25 @@ const userListing = async (req, res) => {
 };
 
 const getSingleUser = async (req, res) => {
+  // res.send('getSingleUser');
+  const { id: userId } = req.params;
+
   if (process.env.DATABASE_MODE === 'MONGODB') {
-    // res.send('getSingleUser');
-    const { id: userId } = req.params;
     const user = await User.findOne({ _id: userId });
     res.status(StatusCodes.OK).json({ user });
   } else {
+    let pool = await sql.connect(config);
+    let user = await pool
+      .request()
+      .input('input_userId', sql.Int, parseInt(userId))
+      .query(
+        'SELECT user_id AS _id , name, email, lastName, location, role FROM myhub_users WHERE user_id = @input_userId'
+      );
+    if (user.recordsets[0].length === 0) {
+      throw new NotFoundError(`No user with id : ${userId} found`);
+    }
+
+    res.status(StatusCodes.OK).json({ user: user.recordsets[0][0] });
   }
 };
 

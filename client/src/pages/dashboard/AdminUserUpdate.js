@@ -1,15 +1,24 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppContext } from '../../context/appContext';
-import { UserUpdateForm, UserResetPasswordForm } from '../../components';
+import {
+  UserUpdateForm,
+  UserResetPasswordForm,
+  LoadingNew,
+} from '../../components';
 
 const AdminUserUpdate = () => {
-  const { getSingleUser, selectedUserObj } = useAppContext();
+  const { getSingleUser, selectedUserObj, isLoading } = useAppContext();
   const { id } = useParams();
 
   useEffect(() => {
     getSingleUser(id);
+    // eslint-disable-next-line
   }, []);
+  console.log(selectedUserObj);
+  if (isLoading) {
+    return <LoadingNew style={{ margin: '0 auto' }} />;
+  }
 
   if (Object.keys(selectedUserObj).length === 0) {
     return (
