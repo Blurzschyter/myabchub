@@ -372,15 +372,15 @@ const deleteSingleUser = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
+  // res.send('resetPassword');
+  const { id: userId } = req.params;
+  const { newPassword } = req.body;
+
+  if (!newPassword) {
+    throw new BadRequestError('Please provide the new password');
+  }
+
   if (process.env.DATABASE_MODE === 'MONGODB') {
-    // res.send('resetPassword');
-    const { id: userId } = req.params;
-    const { newPassword } = req.body;
-
-    if (!newPassword) {
-      throw new BadRequestError('Please provide the new password');
-    }
-
     const selectedUser = await User.findOne({ _id: userId });
     if (!selectedUser) {
       throw new NotFoundError(`No user with id : ${userId} found`);
@@ -390,6 +390,30 @@ const resetPassword = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ msg: 'Password successfully reset' });
   } else {
+    let pool = await sql.connect(config);
+    let user = await pool
+      .request()
+      .input('input_userId', sql.Int, parseInt(userId))
+      .query(
+        'SELECT user_id AS _id , name, email, lastName, location, role FROM myhub_users WHERE user_id = @input_userId'
+      );
+    if (user.recordsets[0].length === 0) {
+      throw new NotFoundError(`No user with id : ${userId} found`);
+    }
+
+    //create hashing password
+    const salt = await bcrypt.genSalt(10);
+    let newPwd = await bcrypt.hash(newPassword, salt);
+
+    let userUpdate = await pool
+      .request()
+      .input('input_userId', sql.Int, parseInt(userId))
+      .input('input_password', sql.VarChar, newPwd)
+      .query(
+        'UPDATE myhub_users SET password = @input_password WHERE user_id = @input_userId'
+      );
+
+    res.status(StatusCodes.OK).json({ msg: 'Password successfully reset' });
   }
 };
 
